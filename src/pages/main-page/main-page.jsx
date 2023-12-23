@@ -1,6 +1,7 @@
 import { FitnessCard } from '../../components/fitness-card/fitness-card';
 import { Header } from '../../components/header/header';
-import './main-page.scss';
+import * as S from './main-page.styles';
+import { Container } from '../../styles/common.styles';
 
 export const MainPage = () => {
     const fitnessCards = [
@@ -16,29 +17,31 @@ export const MainPage = () => {
     };
 
     return (
-        <main className='main-page'>
-            <div className='container'>
+        <S.Main>
+            <Container>
                 <Header />
-                <div className="main-page__info">
-                    <div className="main-page__title-box">
-                        <p className="main-page__super-title">
+                <S.MainInfo>
+                    <S.MainTitleBox>
+                        <S.MainSuperTitle>
                             Онлайн-тренировки для занятий дома
-                        </p>
-                        <h1 className="main-page__title">
+                        </S.MainSuperTitle>
+                        <S.MainTitle>
                             Начните заниматься спортом и улучшите качество жизни
-                        </h1>
-                    </div>
-                    <img src="/img/sale-sticker.svg" alt="sale-sticker" className='main-page__info-img' />
-                </div>
-                <div className="main-page__cards">
+                        </S.MainTitle>
+                    </S.MainTitleBox>
+                    <S.MainImg src="/img/sale-sticker.svg" alt="sale-sticker" />
+                </S.MainInfo>
+                <S.MainCards>
                     {
                         fitnessCards.map(({title, img}) => {
                             return <FitnessCard title={title} img={img} key={img} />
                         })
                     }
-                </div>
-                <button className='main-page__button-up' onClick={handlerScrollToTop}>Наверх ↑</button>
-            </div>
-        </main>
+                </S.MainCards>
+                <S.MainButtonUp onClick={handlerScrollToTop}>
+                    Наверх ↑
+                </S.MainButtonUp>
+            </Container>
+        </S.Main>
     );
 }

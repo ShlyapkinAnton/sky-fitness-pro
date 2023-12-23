@@ -1,13 +1,12 @@
-import { NavLink } from 'react-router-dom'
-import './fitness-card.scss'
+import * as S from './fitness-card.styles'
 
 export const FitnessCard = ({title, img}) => {
     return (
-        <NavLink to='/' className="fitness-card">
-            <h3 className="fitness-card__title">
+        <S.FitnessCard to='/'>
+            <S.FitnessCardTitle>
                 {title}
-            </h3>
+            </S.FitnessCardTitle>
             <img src={`/img/${img}.svg`} alt={title} />
-        </NavLink>
+        </S.FitnessCard>
     )
 }
