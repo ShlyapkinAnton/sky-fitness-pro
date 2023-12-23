@@ -1,3 +1,34 @@
 .main-page {
+    padding-top: 100px;
     background-color: var(--color-main-bg);
+
+    &__info {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    &__title-box {
+        width: 850px;
+    }
+
+    &__super-title {
+        margin-bottom: 17px;
+        color: var(--monochrome-white-20);
+        opacity: 0.5;
+        font-size: 20px;
+        line-height: 1.15;
+        letter-spacing: -0.05px;
+    }
+
+    &__title {
+        color: var(--color-text-light-grey);
+        font-size: 60px;
+        line-height: 0.9;
+        letter-spacing: -1.169px;
+    }
+
+    &__info-img {
+        margin-right: -75px;
+    }
 }

@@ -5,7 +5,7 @@ export const Logo = ({theme = 'dark'}) => {
 
     return (
     <NavLink to='/'>
-        <img src={`/img/logo-${logoTheme}.svg`} alt="" />
+        <img src={`/img/logo-${logoTheme}.svg`} alt="logo" />
     </NavLink>
     );
 };
