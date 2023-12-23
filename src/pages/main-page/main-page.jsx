@@ -1,7 +1,12 @@
+import { Header } from '../../components/header/header';
 import './main-page.scss';
 
 export const MainPage = () => {
     return (
-        <div>Hello world!</div>
+        <main className='main-page'>
+            <div className='container'>
+                <Header />
+            </div>
+        </main>
     );
 }
