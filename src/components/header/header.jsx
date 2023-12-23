@@ -1,16 +1,15 @@
-import './header.scss'
-import { Logo } from "../logo/logo.jsx"
-import { NavLink } from 'react-router-dom';
+import { Logo } from "../logo/logo.jsx";
+import * as S from './header.styles.js';
 
 export const Header = () =>  {
     return (
-        <header className="header">
-            <div className="container header__container">
+        <S.Header>
+            <S.HeaderContainer>
                 <Logo theme="light"/>
-                <NavLink to='/' className="header__button">
+                <S.HeaderButton to='/'>
                     Войти
-                </NavLink>
-            </div>
-        </header>
+                </S.HeaderButton>
+            </S.HeaderContainer>
+        </S.Header>
     );
 };
