@@ -1,0 +1,19 @@
+@import url('https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@800&display=swap');
+
+@font-face {
+    font-family: StratosSkyeng, sans-serif;
+    src: url('../../fonts/StratosSkyeng.woff'),
+        url('../../fonts/StratosSkyeng.woff2');
+    font-style: normal;
+}
+
+body {
+    font-family: StratosSkyeng, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+        monospace;
+}
