@@ -1,8 +1,8 @@
 import * as S from './fitness-card.styles'
 
-export const FitnessCard = ({title, img}) => {
+export const FitnessCard = ({title, img, path}) => {
     return (
-        <S.FitnessCard to='/'>
+        <S.FitnessCard to={path}>
             <S.FitnessCardTitle>
                 {title}
             </S.FitnessCardTitle>

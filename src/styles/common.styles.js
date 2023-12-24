@@ -1,9 +1,18 @@
 import styled, { createGlobalStyle } from "styled-components";
 
+// import StratosSkyengWoff from '../fonts/StratosSkyeng.woff'
+// import StratosSkyengWoff2 from '../fonts/StratosSkyeng.woff2'
+
 export const GlobalStyle = createGlobalStyle`
     :root {
         --color-main-bg-dark: #271A58;
         --color-main-bg-light: #FAFAFA;
+        --color-bg-light-purple: #F9EBFF;
+        --color-bg-palette-purple-90: #580EA2;
+        --color-bg-palette-purple-110: #3F007D;
+        --color-bg-palette-purple-100: #271A58;
+        --color-bg-palette-grey-10: #F4F5F6;
+        --color-bg-palette-grey-20: #D9D9D9;
         --monochrome-white-20: #FFF;
         --monochrome-black-20: #000;
         --color-button-bg: #140D40;
@@ -15,6 +24,12 @@ export const GlobalStyle = createGlobalStyle`
         --color-text-light-green-active: #EBFFAB;
     }
 
+    @font-face {
+    font-family:' StratosSkyeng';
+    src: local('StratosSkyeng'), url('../../public/fonts/StratosSkyeng.woff2') format("woff2"),
+         url('../../public/fonts/StratosSkyeng.woff') format("woff");
+    font-style: normal;
+}
     
     * {
         box-sizing: border-box;
@@ -212,16 +227,10 @@ export const GlobalStyle = createGlobalStyle`
         border: none;
     }
 
-    @font-face {
-        font-family: StratosSkyeng, sans-serif;
-        src: url('../../fonts/StratosSkyeng.woff'),
-            url('../../fonts/StratosSkyeng.woff2');
-        font-style: normal;
-    }
-
     body {
-        font-family: StratosSkyeng, sans-serif;
+        font-family: 'StratosSkyeng', sans-serif;
         font-weight: 400;
+        color: var(--monochrome-black-20);
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
     }
@@ -229,6 +238,15 @@ export const GlobalStyle = createGlobalStyle`
     code {
         font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
             monospace;
+    }
+
+    ul {
+        margin: 0;
+        padding: 0;
+    }
+
+    li {
+        list-style-type: none;
     }
 `
 
