@@ -4,6 +4,7 @@ import { Container } from '../../styles/common.styles';
 import { Header } from '../../components/header/header';
 // import { FitnessCard } from '../../components/fitness-card/fitness-card';
 import { RenameUserData } from '../../components/rename-user-data/rename-user-data.jsx';
+import { userFitnessCards } from '../../mock/courses-data'
 
 export const ProfilePage = () => {
     const [isLoginMode, setIsLoginMode] = useState(null);
@@ -11,12 +12,6 @@ export const ProfilePage = () => {
     const handleLoginClick = () => {setLoginShow(!loginShow); setIsLoginMode(true);}
     const [passwordShow, setPasswordShow] = useState(false)
     const handlePasswordClick = () => {setPasswordShow(!passwordShow); setIsLoginMode(false);}
-
-    const fitnessCards = [
-        {title: 'Йога', img: 'card1'},
-        {title: 'Стретчинг', img: 'card2'},
-        {title: 'Бодифлекс', img: 'card5'},
-    ];
 
     return (
         <S.Main>
@@ -36,7 +31,7 @@ export const ProfilePage = () => {
                 </S.MainInfo> 
                 <S.MainCards>
                     {
-                        fitnessCards.map(({title, img}) => {
+                        userFitnessCards.map(({title, img}) => {
                             return (
                                 <S.FitnessCard key={title} to='/'>
                                     <S.FitnessCardTitle>

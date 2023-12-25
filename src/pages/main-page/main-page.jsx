@@ -1,15 +1,9 @@
 import { FitnessCard } from '../../components/fitness-card/fitness-card';
 import * as S from './main-page.styles';
 import { MainLayout } from '../../layouts/main-layout/main-layout';
+import { fitnessCards } from '../../mock/courses-data'
 
 export const MainPage = ({theme}) => {
-    const fitnessCards = [
-        {title: 'Йога', img: 'card1', path: '/workout/yoga'},
-        {title: 'Стретчинг', img: 'card2', path: '/workout/stretching'},
-        {title: 'Танцевальный фитнес', img: 'card3', path: '/workout/dance-fitness'},
-        {title: 'Степ-аэробика', img: 'card4', path: '/workout/step-aerobics'},
-        {title: 'Бодифлекс', img: 'card5', path: '/workout/bodyflex'},
-    ];
 
     const handlerScrollToTop = () => {
         window.scrollTo({top: 0, behavior: 'smooth'});
