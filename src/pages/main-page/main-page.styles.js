@@ -1,10 +1,5 @@
 import styled from "styled-components";
 
-export const Main = styled.main`
-    padding: 100px 0 60px;
-    background-color: var(--color-main-bg-dark);
-`
-
 export const MainInfo = styled.div`
     display: flex;
     justify-content: space-between;
