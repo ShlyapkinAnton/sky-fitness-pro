@@ -1,14 +1,14 @@
 import { Logo } from "../logo/logo.jsx";
 import * as S from './header.styles.js';
 
-export const Header = () =>  {
+export const Header = ({theme, isLoggedIn = false}) =>  {
     return (
-        <S.Header>
+        <S.Header $theme={theme}>
             <S.HeaderContainer>
-                <Logo theme="light"/>
-                <S.HeaderButton to='/'>
+                <Logo theme={theme}/>
+                {!isLoggedIn ? <S.HeaderButton to='/'>
                     Войти
-                </S.HeaderButton>
+                </S.HeaderButton> : 'Сергей'}
             </S.HeaderContainer>
         </S.Header>
     );

@@ -19,7 +19,7 @@ export const MainPage = () => {
     return (
         <S.Main>
             <Container>
-                <Header />
+                <Header theme='dark' />
                 <S.MainInfo>
                     <S.MainTitleBox>
                         <S.MainSuperTitle>

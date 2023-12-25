@@ -2,7 +2,8 @@ import styled, { createGlobalStyle } from "styled-components";
 
 export const GlobalStyle = createGlobalStyle`
     :root {
-        --color-main-bg: #271A58;
+        --color-main-bg-dark: #271A58;
+        --color-main-bg-light: #FAFAFA;
         --monochrome-white-20: #FFF;
         --monochrome-black-20: #000;
         --color-button-bg: #140D40;

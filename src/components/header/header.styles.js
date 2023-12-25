@@ -9,7 +9,7 @@ export const Header = styled.header`
     z-index: 999;
     width: 100%;
     padding: 24px 0;
-    background-color: var(--color-main-bg);
+    background-color: ${(props) => props.$theme === 'dark' ? 'var(--color-main-bg-dark)' : 'var(--color-main-bg-light)'};
 `
 
 export const HeaderContainer = styled.div`
