@@ -41,3 +41,31 @@ export const HeaderButton = styled(NavLink)`
         background: var(--color-button-bg-active);
     }
 `
+
+export const ProfileBlock = styled.div`
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+`
+
+export const ProfileIcon = styled.div`
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    background-color: rgb(105, 105, 105);
+`
+
+export const ProfileMail = styled.span`
+    font-family: 'StratosSkyeng', sans-serif;
+    font-size: 24px;
+    line-height: 32px;
+    text-align: right;
+    margin-left: 15px;
+    margin-right: 12px;
+    color: black;
+    max-width: 10rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+`
+export const ProfileSvg = styled.div``
