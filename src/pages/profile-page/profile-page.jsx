@@ -3,7 +3,7 @@ import * as S from './profile-page.styles';
 import { Container } from '../../styles/common.styles';
 import { Header } from '../../components/header/header';
 // import { FitnessCard } from '../../components/fitness-card/fitness-card';
-import { RenameUserData } from '../../components/rename-user-data/rename-user-data.jsx';
+import { UpdateUserData } from '../../components/updata-user-data/updata-user-data';
 import { userFitnessCards } from '../../mock/courses-data'
 
 export const ProfilePage = () => {
@@ -45,8 +45,8 @@ export const ProfilePage = () => {
                     }
                 </S.MainCards>
 
-                {loginShow && <RenameUserData isLoginMode={isLoginMode}/>}
-                {passwordShow && <RenameUserData isLoginMode={isLoginMode}/>}
+                {loginShow && <UpdateUserData isLoginMode={isLoginMode}/>}
+                {passwordShow && <UpdateUserData isLoginMode={isLoginMode}/>}
 
             </Container>
         </S.Main>

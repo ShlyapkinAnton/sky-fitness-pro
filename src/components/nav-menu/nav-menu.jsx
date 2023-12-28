@@ -1,4 +1,4 @@
-import * as S from '../nav-menu/nav-menu.styles'
+import * as S from '../nav-menu/nav-menu.styles';
 
 export const NavMenu = () => {
   return (

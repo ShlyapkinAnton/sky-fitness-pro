@@ -11,7 +11,7 @@ export const Header = ({theme, isLoggedIn = false, isShowButton = true}) => {
             <S.HeaderContainer>
                 <Logo theme={theme}/>
                 {isShowButton && (
-                    <>{!isLoggedIn ? <S.HeaderButton to='/'>Войти</S.HeaderButton> : 
+                    <>{!isLoggedIn ? <S.HeaderButton to='/auth'>Войти</S.HeaderButton> : 
                     <S.ProfileBlock onClick={() => handleMoreClick()}>
                         <S.ProfileIcon></S.ProfileIcon>
                         <S.ProfileMail>

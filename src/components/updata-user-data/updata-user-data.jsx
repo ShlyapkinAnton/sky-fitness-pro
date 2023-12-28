@@ -1,14 +1,13 @@
-import * as S from './rename-user-data.styles'
-import { useState } from 'react'
+import * as S from './updata-user-data.styles.js';
+import { useState } from 'react';
 import { Logo } from "../logo/logo.jsx";
 
-export const RenameUserData = ({isLoginMode}) => {
+export const UpdateUserData = ({isLoginMode}) => {
   const [error, setError] = useState(null);
   const [login, setLogin] = useState('');
   const [password, setPassword] = useState('');
   const [repeatPassword, setRepeatPassword] = useState('');
   const [buttonActive, setButtonActive] = useState(false);
-  const [show, setShow] = useState(true);
 
   const handleLogin = async ({ login }) => {
     if (!login) {
