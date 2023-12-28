@@ -1,9 +1,9 @@
 export const fitnessCards = [
-    {title: 'Йога', img: 'card1', path: '/workout/yoga'},
-    {title: 'Стретчинг', img: 'card2', path: '/workout/stretching'},
-    {title: 'Танцевальный фитнес', img: 'card3', path: '/workout/dance-fitness'},
-    {title: 'Степ-аэробика', img: 'card4', path: '/workout/step-aerobics'},
-    {title: 'Бодифлекс', img: 'card5', path: '/workout/bodyflex'},
+    {title: 'Йога', img: 'card1', path: '/course/yoga'},
+    {title: 'Стретчинг', img: 'card2', path: '/course/stretching'},
+    {title: 'Танцевальный фитнес', img: 'card3', path: '/course/dance-fitness'},
+    {title: 'Степ-аэробика', img: 'card4', path: '/course/step-aerobics'},
+    {title: 'Бодифлекс', img: 'card5', path: '/course/bodyflex'},
 ]
 
 export const userFitnessCards = [

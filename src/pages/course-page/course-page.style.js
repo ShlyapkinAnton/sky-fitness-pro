@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const WorkoutPageContainer = styled.div`
+export const CoursePageContainer = styled.div`
     display: flex;
     flex-direction: column;
     gap: 75px;

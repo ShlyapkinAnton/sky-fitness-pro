@@ -1,10 +1,10 @@
 import { BaseButton } from "../../components/button/button";
 import { MainLayout } from "../../layouts/main-layout/main-layout";
-import * as S from './workout-page.style';
+import * as S from './course-page.style';
 import { useNavigate } from "react-router";
 import { content } from '../../mock/courses-data'
 
-export const WorkoutPage = ({theme, contentKey, isShowButton}) => {
+export const CoursePage = ({theme, contentKey, isShowButton}) => {
     const navigate = useNavigate();
 
     const handleNavigation = () => {
@@ -13,7 +13,7 @@ export const WorkoutPage = ({theme, contentKey, isShowButton}) => {
 
     return (
         <MainLayout theme={theme} isShowButton={isShowButton}>
-            <S.WorkoutPageContainer>
+            <S.CoursePageContainer>
                 <S.TitleBox>
                     <S.Title>{content[contentKey].title}</S.Title>
                     <img src={`/img/page-img/${content[contentKey].img}.png`} alt={content[contentKey].title} />
@@ -57,10 +57,10 @@ export const WorkoutPage = ({theme, contentKey, isShowButton}) => {
                         Оставьте заявку на пробное занятие, мы свяжемся 
                         с вами, поможем с выбором направления и тренера, с которым тренировки принесут здоровье и радость!
                     </S.SubmitApplicationText>
-                    <BaseButton action={handleNavigation} theme='dark' text='Записаться на тренировку' />
+                    <BaseButton theme='dark' text='Записаться на тренировку' />
                     <S.SubmitApplicationImg src="/img/phone.svg" alt="phone" />
                 </S.SubmitApplication>
-            </S.WorkoutPageContainer>
+            </S.CoursePageContainer>
         </MainLayout>
     );
 };
