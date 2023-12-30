@@ -9,10 +9,6 @@ export const PageClose = styled.div`
 `
 
 export const PageContainer = styled.div`
-//   max-width: 100%;
-//   height: 100vh;
-//   background-color: rgba(0, 0, 0, 0.85);
-
     position: fixed;
     left: 0px;
     top: 0px;

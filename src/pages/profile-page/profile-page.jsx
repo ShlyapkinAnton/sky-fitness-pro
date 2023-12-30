@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import * as S from './profile-page.styles';
 import { Container } from '../../styles/common.styles';
 import { Header } from '../../components/header/header';
@@ -12,6 +12,14 @@ export const ProfilePage = () => {
     const handleLoginClick = () => {setLoginShow(!loginShow); setIsLoginMode(true);}
     const [passwordShow, setPasswordShow] = useState(false)
     const handlePasswordClick = () => {setPasswordShow(!passwordShow); setIsLoginMode(false);}
+
+    // const [isActive, setIsActive] = useState(false);
+    // useEffect(() => {
+    //     if (loginShow === true || passwordShow === true) {
+    //         setIsActive(true);
+    //     }
+    // }, [loginShow, passwordShow])
+
 
     return (
         <S.Main>
@@ -44,9 +52,9 @@ export const ProfilePage = () => {
                         })
                     }
                 </S.MainCards>
-
-                {loginShow && <UpdateUserData isLoginMode={isLoginMode}/>}
-                {passwordShow && <UpdateUserData isLoginMode={isLoginMode}/>}
+                {/* {isActive && <UpdateUserData isLoginMode={isLoginMode} /> } */}
+                {loginShow && <UpdateUserData isLoginMode={isLoginMode} /> }
+                {passwordShow && <UpdateUserData isLoginMode={isLoginMode} />}
 
             </Container>
         </S.Main>

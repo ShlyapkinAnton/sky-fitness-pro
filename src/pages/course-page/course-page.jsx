@@ -1,26 +1,24 @@
 import { BaseButton } from "../../components/button/button";
 import { MainLayout } from "../../layouts/main-layout/main-layout";
 import * as S from './course-page.style';
-import { useNavigate } from "react-router";
 import { content } from '../../mock/courses-data'
+import { ProgressBlock } from '../../components/progress-block/progress-block'
+import { useState } from 'react';
 
 export const CoursePage = ({theme, contentKey, isShowButton}) => {
-    const navigate = useNavigate();
-
-    const handleNavigation = () => {
-        navigate('/');
-    };
+    const [show, setShow] = useState(false)
+    const handleLoginClick = () => {setShow(!show)}
 
     return (
         <MainLayout theme={theme} isShowButton={isShowButton}>
             <S.CoursePageContainer>
                 <S.TitleBox>
-                    <S.Title>{content[contentKey].title}</S.Title>
+                    <S.Title>{content[contentKey].title}</S.Title> 
                     <img src={`/img/page-img/${content[contentKey].img}.png`} alt={content[contentKey].title} />
                 </S.TitleBox>
                 
                 <S.About>
-                    <S.AboutTitle>{content[contentKey].about.title}:</S.AboutTitle>
+                    <S.AboutTitle>Подойдет для вас, если:</S.AboutTitle>
                     <S.AboutList>
                         {content[contentKey].about.textList.map((item, index) => {
                             return (
@@ -36,7 +34,7 @@ export const CoursePage = ({theme, contentKey, isShowButton}) => {
                 </S.About>
 
                 <S.Directions>
-                    <S.AboutTitle>{content[contentKey].directions.title}:</S.AboutTitle>
+                    <S.AboutTitle>Направления:</S.AboutTitle>
                     <S.DirectionsList>
                         {content[contentKey].directions.textList.map((item, index) => {
                             return (
@@ -57,9 +55,10 @@ export const CoursePage = ({theme, contentKey, isShowButton}) => {
                         Оставьте заявку на пробное занятие, мы свяжемся 
                         с вами, поможем с выбором направления и тренера, с которым тренировки принесут здоровье и радость!
                     </S.SubmitApplicationText>
-                    <BaseButton theme='dark' text='Записаться на тренировку' />
+                    <BaseButton action={() => handleLoginClick()} theme='dark' text='Записаться на тренировку' />
                     <S.SubmitApplicationImg src="/img/phone.svg" alt="phone" />
                 </S.SubmitApplication>
+                {show && <ProgressBlock text = 'Вы успешно записались!' setShow={setShow}/>}
             </S.CoursePageContainer>
         </MainLayout>
     );
