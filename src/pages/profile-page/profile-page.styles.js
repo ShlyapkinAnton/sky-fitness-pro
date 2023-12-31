@@ -75,6 +75,7 @@ export const MainButton= styled.button`
     padding: 12px 47px 16px 47px;
     color: #FFFFFF;
     background-color: #580EA2;
+    cursor: pointer;
 
     &:hover {
         background: #3F007D;
