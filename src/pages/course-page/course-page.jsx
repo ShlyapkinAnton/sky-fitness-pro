@@ -13,8 +13,8 @@ export const CoursePage = ({theme, contentKey, isShowButton}) => {
         <MainLayout theme={theme} isShowButton={isShowButton}>
             <S.CoursePageContainer>
                 <S.TitleBox>
-                    <S.Title>{content[contentKey].title}</S.Title> 
-                    <img src={`/img/page-img/${content[contentKey].img}.png`} alt={content[contentKey].title} />
+                    <S.Title>{content[contentKey].title}</S.Title>
+                    <img src={`/img/page-img/${content[contentKey].img}.svg`} alt={content[contentKey].title} />
                 </S.TitleBox>
                 
                 <S.About>
