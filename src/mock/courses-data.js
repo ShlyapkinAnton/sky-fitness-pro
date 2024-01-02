@@ -1,8 +1,8 @@
 export const fitnessCards = [
     {title: 'Йога', img: 'card1', path: '/course/yoga'},
     {title: 'Стретчинг', img: 'card2', path: '/course/stretching'},
-    {title: 'Танцевальный фитнес', img: 'card3', path: '/course/dance-fitness'},
-    {title: 'Степ-аэробика', img: 'card4', path: '/course/step-aerobics'},
+    {title: 'Танцевальный фитнес', img: 'card3', path: '/course/danceFitness'},
+    {title: 'Степ-аэробика', img: 'card4', path: '/course/stepAerobics'},
     {title: 'Бодифлекс', img: 'card5', path: '/course/bodyflex'},
 ]
 
@@ -15,7 +15,7 @@ export const userFitnessCards = [
 export const content = {
     yoga: {
         title: 'Йога',
-        img: 'skill1',
+        img: 'card1',
         about: {
             textList: [
                 'Давно хотели попробовать йогу, но не решались начать.',
@@ -37,7 +37,7 @@ export const content = {
     },
     stretching: {
         title: 'Стретчинг',
-        img: 'skill1',
+        img: 'card2',
         about: {
             textList: [
                 'Улучшить осанку и координацию.',
@@ -57,7 +57,7 @@ export const content = {
     },
     danceFitness: {
         title: 'Танцевальный фитнес',
-        img: 'skill1',
+        img: 'card3',
         about: {
             textList: [
                 'Хотите укрепить мышцы, но тренировки в тренажерном зале для вас скучные и однообразные.',
@@ -76,7 +76,7 @@ export const content = {
     },
     stepAerobics: {
         title: 'Степ-аэробика',
-        img: 'skill1',
+        img: 'card4',
         about: {
             textList: [
                 'Хотите укрепить дыхательную и сердечно-сосудистой системы.',
@@ -95,7 +95,7 @@ export const content = {
     },
     bodyflex: {
         title: 'Бодифлекс',
-        img: 'skill1',
+        img: 'card5',
         about: {
             textList: [
                 'Хотите укрепить легкие и снизить вероятность заболеваний дыхательной системы.',

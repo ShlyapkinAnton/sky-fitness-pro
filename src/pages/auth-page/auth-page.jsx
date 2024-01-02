@@ -96,7 +96,7 @@ export const AuthPage = ({theme}) => {
             <>
                 <S.Inputs>
                     <S.ModalInput
-                        type="text"
+                        type="email"
                         name="login"
                         placeholder="Логин"
                         value={login}
@@ -131,7 +131,7 @@ export const AuthPage = ({theme}) => {
             <>
                 <S.Inputs>
                     <S.ModalInput
-                        type="text"
+                        type="email"
                         name="login"
                         placeholder="Логин"
                         value={login}

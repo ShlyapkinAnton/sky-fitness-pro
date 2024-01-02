@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import * as S from './profile-page.styles';
 import { Container } from '../../styles/common.styles';
 import { Header } from '../../components/header/header';
-// import { FitnessCard } from '../../components/fitness-card/fitness-card';
 import { UpdateUserData } from '../../components/updata-user-data/updata-user-data';
 import { userFitnessCards } from '../../mock/courses-data'
 
@@ -13,12 +12,12 @@ export const ProfilePage = () => {
     const [passwordShow, setPasswordShow] = useState(false)
     const handlePasswordClick = () => {setPasswordShow(!passwordShow); setIsLoginMode(false);}
 
-    // const [isActive, setIsActive] = useState(false);
-    // useEffect(() => {
-    //     if (loginShow === true || passwordShow === true) {
-    //         setIsActive(true);
-    //     }
-    // }, [loginShow, passwordShow])
+    const [isActive, setIsActive] = useState(false);
+    useEffect(() => {
+        if (loginShow === true || passwordShow === true) {
+            setIsActive(true);
+        }
+    }, [loginShow, passwordShow])
 
 
     return (
@@ -41,7 +40,7 @@ export const ProfilePage = () => {
                     {
                         userFitnessCards.map(({title, img}) => {
                             return (
-                                <S.FitnessCard key={title} to='/'>
+                                <S.FitnessCard key={title} to='/workout/'>
                                     <S.FitnessCardTitle>
                                         {title}
                                     </S.FitnessCardTitle>
@@ -52,9 +51,9 @@ export const ProfilePage = () => {
                         })
                     }
                 </S.MainCards>
-                {/* {isActive && <UpdateUserData isLoginMode={isLoginMode} /> } */}
-                {loginShow && <UpdateUserData isLoginMode={isLoginMode} /> }
-                {passwordShow && <UpdateUserData isLoginMode={isLoginMode} />}
+                {isActive && <UpdateUserData isLoginMode={isLoginMode} setIsActive={setIsActive}/> }
+                {/* {loginShow && <UpdateUserData isLoginMode={isLoginMode} /> }
+                {passwordShow && <UpdateUserData isLoginMode={isLoginMode} />} */}
 
             </Container>
         </S.Main>

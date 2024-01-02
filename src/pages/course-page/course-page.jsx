@@ -4,17 +4,20 @@ import * as S from './course-page.style';
 import { content } from '../../mock/courses-data'
 import { ProgressBlock } from '../../components/progress-block/progress-block'
 import { useState } from 'react';
+import { useParams } from 'react-router-dom';
 
-export const CoursePage = ({theme, contentKey, isShowButton}) => {
+export const CoursePage = ({theme, isShowButton}) => {
     const [show, setShow] = useState(false)
     const handleLoginClick = () => {setShow(!show)}
+    const param = useParams()
+    const contentKey = param.id
 
     return (
         <MainLayout theme={theme} isShowButton={isShowButton}>
             <S.CoursePageContainer>
                 <S.TitleBox>
-                    <S.Title>{content[contentKey].title}</S.Title> 
-                    <img src={`/img/page-img/${content[contentKey].img}.png`} alt={content[contentKey].title} />
+                    <S.Title>{content[contentKey].title}</S.Title>
+                    <img src={`/img/page-img/${content[contentKey].img}.svg`} alt={content[contentKey].title} />
                 </S.TitleBox>
                 
                 <S.About>

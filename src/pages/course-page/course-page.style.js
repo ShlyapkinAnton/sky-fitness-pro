@@ -10,6 +10,10 @@ export const CoursePageContainer = styled.div`
 
 export const TitleBox = styled.div`
     position: relative;
+    border-radius: 30px;
+    width: 1160px;
+    height: 310px;
+    background-color: rgb(255, 255, 255);
 `
 
 export const Title = styled.h1`

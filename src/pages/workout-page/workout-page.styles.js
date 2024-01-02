@@ -33,6 +33,7 @@ export const WorkoutVideo = styled.div`
     justify-content: center;
     border-radius: 6px;
     margin: 40px 0 75px 0;
+    cursor: pointer;
 `
 
 export const WorkoutBlock = styled.div`
@@ -73,6 +74,7 @@ export const WorkoutExerciseButton = styled.button`
     background: #580EA2;
     padding: 12px 27px 16px 28px;
     margin-top: 40px;
+    cursor: pointer;
 
     font-size: 18px;
     font-weight: 400;
