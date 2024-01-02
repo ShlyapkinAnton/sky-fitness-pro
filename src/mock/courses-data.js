@@ -1,8 +1,8 @@
 export const fitnessCards = [
     {title: 'Йога', img: 'card1', path: '/course/yoga'},
     {title: 'Стретчинг', img: 'card2', path: '/course/stretching'},
-    {title: 'Танцевальный фитнес', img: 'card3', path: '/course/dance-fitness'},
-    {title: 'Степ-аэробика', img: 'card4', path: '/course/step-aerobics'},
+    {title: 'Танцевальный фитнес', img: 'card3', path: '/course/danceFitness'},
+    {title: 'Степ-аэробика', img: 'card4', path: '/course/stepAerobics'},
     {title: 'Бодифлекс', img: 'card5', path: '/course/bodyflex'},
 ]
 

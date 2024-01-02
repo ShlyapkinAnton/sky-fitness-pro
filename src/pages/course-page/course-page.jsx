@@ -4,10 +4,13 @@ import * as S from './course-page.style';
 import { content } from '../../mock/courses-data'
 import { ProgressBlock } from '../../components/progress-block/progress-block'
 import { useState } from 'react';
+import { useParams } from 'react-router-dom';
 
-export const CoursePage = ({theme, contentKey, isShowButton}) => {
+export const CoursePage = ({theme, isShowButton}) => {
     const [show, setShow] = useState(false)
     const handleLoginClick = () => {setShow(!show)}
+    const param = useParams()
+    const contentKey = param.id
 
     return (
         <MainLayout theme={theme} isShowButton={isShowButton}>
