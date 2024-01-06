@@ -19,6 +19,7 @@ export const PageClose = styled.div`
     top: 0px;
     right: 0px;
     padding: 10px;
+    cursor: pointer;
 `
 
 export const ProgressBlock = styled.div`
