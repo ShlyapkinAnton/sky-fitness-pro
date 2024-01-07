@@ -5,21 +5,23 @@ import { Preloader } from "../../components/preloader/preloader"
 import { useState } from "react"
 import { useEffect } from "react"
 
-export const MainLayout = ({children, theme, isShowButton, isLoggedIn}) => {
-    const [isLoading, setLoading] = useState(false);
+export const MainLayout = ({children, theme, isShowButton, isLoggedIn, isLoading = false}) => {
+    const [isLoadingPreloader, setLoadingPreloader] = useState(false);
 
     useEffect(() => {
-        setLoading(true);
-        setTimeout(() => {
-          setLoading(false);
-        }, 1500);
+        if (!isLoading) {
+            setLoadingPreloader(true);
+            setTimeout(() => {
+                setLoadingPreloader(false);
+            }, 1500);
+        }
       }, []);
 
     return (
         <> 
+            {(isLoading || isLoadingPreloader) && <Preloader />}
             <Header theme={theme} isShowButton={isShowButton} isLoggedIn={isLoggedIn} />
             <Main $theme={theme}>
-                {isLoading && <Preloader />}
                 <Container>
                     {children}
                 </Container>

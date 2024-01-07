@@ -4,6 +4,7 @@ import { Container } from '../../styles/common.styles';
 import { Header } from '../../components/header/header';
 import { UpdateUserData } from '../../components/updata-user-data/updata-user-data';
 import { userFitnessCards } from '../../mock/courses-data'
+import { MainLayout } from '../../layouts/main-layout/main-layout';
 
 export const ProfilePage = () => {
     const [isLoginMode, setIsLoginMode] = useState(null);
@@ -21,10 +22,7 @@ export const ProfilePage = () => {
 
 
     return (
-        <S.Main>
-            <Container>
-                <Header theme='white' isLoggedIn="true" />
-
+            <MainLayout theme='white' isLoggedIn="true">
                 <S.MainInfo>
                     <S.MainTitle>Мой профиль</S.MainTitle>
                     <S.MainTextBlock>
@@ -54,8 +52,7 @@ export const ProfilePage = () => {
                 {isActive && <UpdateUserData isLoginMode={isLoginMode} setIsActive={setIsActive}/> }
                 {/* {loginShow && <UpdateUserData isLoginMode={isLoginMode} /> }
                 {passwordShow && <UpdateUserData isLoginMode={isLoginMode} />} */}
-
-            </Container>
-        </S.Main>
+            </MainLayout>
+  
     )
 }
