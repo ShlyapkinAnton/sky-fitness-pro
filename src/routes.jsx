@@ -5,15 +5,19 @@ import { ProfilePage } from "./pages/profile-page/profile-page.jsx";
 import { CoursePage } from "./pages/course-page/course-page.jsx";
 import { AuthPage } from "./pages/auth-page/auth-page.jsx";
 import { WorkoutPage } from "./pages/workout-page/workout-page.jsx";
+import { ProtectedRoute } from './components/protected-route/protectedRoute'
 
-export const AppRoutes = () => {
+export const AppRoutes = ({ user }) => {
     return (
         <Routes>
-            <Route  path="/" element={<MainPage theme='dark'/>} />
+            <Route  path="/" element={<MainPage theme='dark'/>} /> 
             <Route  path="/auth" element={<AuthPage theme='dark'/>} />
-            <Route  path="/course/:id" element={<CoursePage theme='light'/>} />
-            <Route  path="/profile" element={<ProfilePage/>} />
-            <Route  path="/workout/" element={<WorkoutPage theme='light' isLoggedIn = {true}/>} />
+            <Route  path="/course/:id" element={<CoursePage theme='light'/>}/>
+            
+            <Route element={<ProtectedRoute isAllowed={Boolean(user)} />}>
+                <Route  path="/profile" element={<ProfilePage/>} />
+                <Route  path="/profile/workout/:id" element={<WorkoutPage theme='light' />} />
+            </Route>
         </Routes>
     )
 }

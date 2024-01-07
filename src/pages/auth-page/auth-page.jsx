@@ -2,49 +2,42 @@ import { Link, useNavigate } from 'react-router-dom'
 import * as S from './auth-page.styles'
 import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
-// import { getSignUp, getSignIn } from '../../Api'
-// import { useAccessTokenUserMutation } from '../../serviceQuery/token'
-// import { setAuth } from '../../store/slices/authorizationSlice'
 import { MainLayout } from '../../layouts/main-layout/main-layout';
 import { Logo } from '../../components/logo/logo'
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../../Firebase.js'
+import { setAuth } from '../../store/slices/auth'
 
 export const AuthPage = ({theme}) => {
   const [isLoginMode, setIsLoginMode] = useState(true)
-//   const dispatch = useDispatch()
+  const dispatch = useDispatch()
   const [error, setError] = useState(null)
-  const [login, setLogin] = useState('')
+  const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [repeatPassword, setRepeatPassword] = useState('')
   const navigate = useNavigate()
   const [buttonActive, setButtonActive] = useState(false)
 
-//   const [postToken] = useAccessTokenUserMutation()
+  const handleLogin = async ({ email, password }) => {
 
-//   const responseToken = async () => {
-//     await postToken({ login, password })
-//       .unwrap()
-//       .then((token) => {
-//         dispatch(
-//           setAuth({
-//             access: token.access,
-//             refresh: token.refresh,
-//             user: JSON.parse(localStorage.getItem('user')),
-//           })
-//         )
-//       })
-//   }
-
-  const handleLogin = async ({ login, password }) => {
-    if (!login || !password) {
+    if (!email || !password) {
       setError('Заполните поле ввода')
       return
     }
     try {
-      const response = await getSignIn({ login, password })
+      const response = await signInWithEmailAndPassword(auth, email, password)
+      .then(({ user }) => {
+        dispatch(
+            setAuth({
+                accessToken: user.accessToken,
+                email: user.email,
+                uid: user.uid,
+                refreshToken: user.stsTokenManager.refreshToken,
+            }),
+        )
+      })
+      // console.log('login-response', response)
       // dispatch(setAuth(response))
-      setUser(response)
-      localStorage.setItem('user', JSON.stringify(response))
-      responseToken()
       setButtonActive(true)
       navigate('/', { replace: true })
       setError(null)
@@ -57,7 +50,8 @@ export const AuthPage = ({theme}) => {
   }
 
   const handleRegister = async () => {
-    if ( !login || !password || !repeatPassword) {
+
+    if ( !email || !password || !repeatPassword) {
       setError('Заполните поле ввода')
       return
     }
@@ -66,10 +60,19 @@ export const AuthPage = ({theme}) => {
       return
     }
     try {
-      const response = await getSignUp({ login, password })
-      setUser(response)
-      localStorage.setItem('user', JSON.stringify(response))
-      responseToken()
+      const response = await createUserWithEmailAndPassword(auth, email, password)
+      .then(({ user }) => {
+        dispatch(
+            setAuth({
+                accessToken: user.accessToken,
+                email: user.email,
+                uid: user.uid,
+                refreshToken: user.stsTokenManager.refreshToken,
+            }),
+        )
+    })
+      // console.log('reg-response', response)
+      // dispatch(setAuth(response))
       setButtonActive(true)
       navigate('/', { replace: true })
       setError(null)
@@ -84,7 +87,7 @@ export const AuthPage = ({theme}) => {
 
   useEffect(() => {
     setError(null)
-  }, [isLoginMode, login, password, repeatPassword])
+  }, [isLoginMode, email, password, repeatPassword])
 
   return (
     <MainLayout theme={theme} isShowButton = {false}>
@@ -99,9 +102,9 @@ export const AuthPage = ({theme}) => {
                         type="email"
                         name="login"
                         placeholder="Логин"
-                        value={login}
+                        value={email}
                         onChange={(event) => {
-                        setLogin(event.target.value)
+                        setEmail(event.target.value)
                         }}
                     />
                     <S.ModalInput
@@ -118,7 +121,7 @@ export const AuthPage = ({theme}) => {
                 <S.Buttons>
                 <S.PrimaryButton
                     disabled={buttonActive}
-                    onClick={() => handleLogin({ login, password })}
+                    onClick={() => handleLogin({ email, password })}
                 >
                     {buttonActive ? 'Выполняется вход...' : 'Войти'}
                 </S.PrimaryButton>
@@ -134,9 +137,9 @@ export const AuthPage = ({theme}) => {
                         type="email"
                         name="login"
                         placeholder="Логин"
-                        value={login}
+                        value={email}
                         onChange={(event) => {
-                        setLogin(event.target.value)
+                        setEmail(event.target.value)
                         }}
                     />
                     <S.ModalInput
