@@ -3,10 +3,9 @@ import * as S from './main-page.styles';
 import { MainLayout } from '../../layouts/main-layout/main-layout';
 import { fitnessCards } from '../../mock/courses-data';
 import { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { setAllCourses } from '../../store/slices/courses'
 import { useGetCoursesQuery } from '../../serviceQuery/courses'
-import { allCoursesSelector} from '../../store/selectors/courses'
 
 export const MainPage = ({theme}) => {
     const handlerScrollToTop = () => {
@@ -15,7 +14,6 @@ export const MainPage = ({theme}) => {
 
     const [errorFetch, setErrorFetch] = useState(null)
     const { data, isError, isLoading } = useGetCoursesQuery()
-    const courseAll = useSelector(allCoursesSelector)
     const dispatch = useDispatch()
     
     useEffect(() => {

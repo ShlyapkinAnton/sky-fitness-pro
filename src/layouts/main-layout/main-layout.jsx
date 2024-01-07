@@ -2,10 +2,9 @@ import { Header } from "../../components/header/header"
 import { Main } from './main-layout.style'
 import { Container } from "../../styles/common.styles"
 import { Preloader } from "../../components/preloader/preloader"
-import { useState } from "react"
-import { useEffect } from "react"
+import { useState, useEffect } from "react"
 
-export const MainLayout = ({children, theme, isShowButton, isLoggedIn, isLoading = false}) => {
+export const MainLayout = ({children, theme, isShowButton, isLoading = false}) => {
     const [isLoadingPreloader, setLoadingPreloader] = useState(false);
 
     useEffect(() => {
@@ -20,7 +19,7 @@ export const MainLayout = ({children, theme, isShowButton, isLoggedIn, isLoading
     return (
         <> 
             {(isLoading || isLoadingPreloader) && <Preloader />}
-            <Header theme={theme} isShowButton={isShowButton} isLoggedIn={isLoggedIn} />
+            <Header theme={theme} isShowButton={isShowButton} />
             <Main $theme={theme}>
                 <Container>
                     {children}
