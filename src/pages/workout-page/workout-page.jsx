@@ -31,8 +31,8 @@ export const WorkoutPage = ({theme, isLoggedIn}) => {
                     <iframe 
                         width="100%" height="100%"
                         src={data?.video}
-                        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; allow-popups"
-                        allowfullscreen>
+                        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture;"
+                    >
                     </iframe>}
                 </S.WorkoutVideo>
 
