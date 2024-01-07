@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect } from 'react';
 import { Routes, Route } from "react-router";
 import { MainPage } from "./pages/main-page/main-page.jsx";
 import { ProfilePage } from "./pages/profile-page/profile-page.jsx";
@@ -7,7 +7,9 @@ import { AuthPage } from "./pages/auth-page/auth-page.jsx";
 import { WorkoutPage } from "./pages/workout-page/workout-page.jsx";
 import { ProtectedRoute } from './components/protected-route/protectedRoute'
 
-export const AppRoutes = ({ user }) => {
+export const AppRoutes = ({ userData }) => {
+    const user = userData?.userName;
+
     return (
         <Routes>
             <Route  path="/" element={<MainPage theme='dark'/>} /> 
