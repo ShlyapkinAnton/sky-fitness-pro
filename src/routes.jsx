@@ -13,7 +13,7 @@ export const AppRoutes = () => {
             <Route  path="/auth" element={<AuthPage theme='dark'/>} />
             <Route  path="/course/:id" element={<CoursePage theme='light'/>} />
             <Route  path="/profile" element={<ProfilePage/>} />
-            <Route  path="/workout/" element={<WorkoutPage theme='light' isLoggedIn = {true}/>} />
+            <Route  path="/profile/workout/:id" element={<WorkoutPage theme='light' isLoggedIn = {true}/>} />
         </Routes>
     )
 }

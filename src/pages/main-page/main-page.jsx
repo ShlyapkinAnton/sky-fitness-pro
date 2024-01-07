@@ -1,13 +1,12 @@
 import { FitnessCard } from '../../components/fitness-card/fitness-card';
 import * as S from './main-page.styles';
 import { MainLayout } from '../../layouts/main-layout/main-layout';
-import { Preloader } from '../../components/preloader/preloader';
 import { fitnessCards } from '../../mock/courses-data';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setAllCourses, setAllCoursesCards } from '../../store/slices/courses'
-import { useGetCoursesCardsQuery, useGetCoursesQuery } from '../../serviceQuery/courses'
-import { allCoursesSelector, allCursesCardsSelector } from '../../store/selectors/courses'
+import { setAllCourses } from '../../store/slices/courses'
+import { useGetCoursesQuery } from '../../serviceQuery/courses'
+import { allCoursesSelector} from '../../store/selectors/courses'
 
 export const MainPage = ({theme}) => {
     const handlerScrollToTop = () => {
@@ -16,9 +15,7 @@ export const MainPage = ({theme}) => {
 
     const [errorFetch, setErrorFetch] = useState(null)
     const { data, isError, isLoading } = useGetCoursesQuery()
-    // const { fitnessCards = data, fitnessCardsError = isError, fitnessCardsErrorLoading = isLoading } = useGetCoursesCardsQuery();
     const courseAll = useSelector(allCoursesSelector)
-    const courseAllCards = useSelector(allCursesCardsSelector)
     const dispatch = useDispatch()
     
     useEffect(() => {
@@ -27,10 +24,7 @@ export const MainPage = ({theme}) => {
             dispatch(setAllCourses(arr))
             setErrorFetch(null)
         }
-        if (fitnessCards) {
-            dispatch(setAllCoursesCards(fitnessCards))
-            setErrorFetch(null)
-        }
+    
         if (isError) {
             setErrorFetch('Не удалось загрузить данные, попробуйте позже')
         }

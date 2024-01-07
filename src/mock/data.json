@@ -78,7 +78,7 @@
       "workouts": ["gh7bd5", "hwsut5", "n18r8v", "dq9rzo", "rr70ie"]
     }
   },
-  "cursesCards": [
+  "curses-cards": [
     {"title": "Йога", "img": "card1", "path": "/course/ab1c3f"},
     {"title": "Стретчинг", "img": "card2", "path": "/course/kfpq8e"},
     {"title": "Танцевальный фитнес", "img": "card3", "path": "/course/ypox9r"},

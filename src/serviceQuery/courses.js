@@ -14,17 +14,22 @@ export const coursesQuery = createApi({
                 url: 'courses.json',
             }),
         }),
-        getCoursesCards: build.query({
-            query: () => ({
-                url: 'cursesCards.json',
-            }),
-        }),
         getCourse: build.query({
             query: (id) => ({
                 url: `courses/${id}.json`,
             }),
         }),
+        getWorkouts: build.query({
+            query: () => ({
+                url: `workouts.json`,
+            }),
+        }),
+        getWorkout: build.query({
+            query: (id) => ({
+                url: `workouts/${id}.json`,
+            }),
+        }),
     }),
 })
 
-export const { useGetCoursesQuery, useGetCourseQuery, useGetCoursesCardsQuery } = coursesQuery    
+export const { useGetCoursesQuery, useGetCourseQuery, useGetWorkoutsQuery, useGetWorkoutQuery } = coursesQuery    

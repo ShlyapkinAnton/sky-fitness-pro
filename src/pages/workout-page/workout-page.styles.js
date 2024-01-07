@@ -33,7 +33,7 @@ export const WorkoutVideo = styled.div`
     justify-content: center;
     border-radius: 6px;
     margin: 40px 0 75px 0;
-    cursor: pointer;
+    overflow: hidden;
 `
 
 export const WorkoutBlock = styled.div`
@@ -125,18 +125,16 @@ export const WorkoutProgressBar = styled.div`
     width: 278px;
     height: 36px;
     border-radius: 22px;
-    border: 2px solid #565EEF;
+    border: 2px solid ${(props) => props.$color};
     overflow: hidden;
-
 `
 
 export const WorkoutProgressBarLine = styled.div`
-    color: #565EEF;
-    width: 10%;
+    color: ${(props) => props.$color};
+    width: ${(props) => props.$width}%;
     height: 100%;
     position: relative;
-
-    background: #565EEF;
+    background-color: ${(props) => props.$color};
 `
 
 export const WorkoutProgressBarSpan = styled.span`
@@ -148,6 +146,4 @@ export const WorkoutProgressBarSpan = styled.span`
     line-height: 32px;
     letter-spacing: 0em;
     text-align: left;
-    // color: #FFFFFF;
-
 `
