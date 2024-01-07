@@ -19,7 +19,17 @@ export const coursesQuery = createApi({
                 url: `courses/${id}.json`,
             }),
         }),
+        getWorkouts: build.query({
+            query: () => ({
+                url: `workouts.json`,
+            }),
+        }),
+        getWorkout: build.query({
+            query: (id) => ({
+                url: `workouts/${id}.json`,
+            }),
+        }),
     }),
 })
 
-export const { useGetCoursesQuery, useGetCourseQuery } = coursesQuery    
+export const { useGetCoursesQuery, useGetCourseQuery, useGetWorkoutsQuery, useGetWorkoutQuery } = coursesQuery    

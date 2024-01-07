@@ -6,7 +6,7 @@ import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setAllCourses } from '../../store/slices/courses'
 import { useGetCoursesQuery } from '../../serviceQuery/courses'
-import { allCoursesSelector } from '../../store/selectors/courses'
+import { allCoursesSelector} from '../../store/selectors/courses'
 
 export const MainPage = ({theme}) => {
     const handlerScrollToTop = () => {
@@ -24,13 +24,14 @@ export const MainPage = ({theme}) => {
             dispatch(setAllCourses(arr))
             setErrorFetch(null)
         }
+    
         if (isError) {
-            setErrorFetch('Не удалось загрузить плейлист, попробуйте позже')
+            setErrorFetch('Не удалось загрузить данные, попробуйте позже')
         }
-    }, [data, isError])
+    }, [data, isError, fitnessCards])
 
     return (
-        <MainLayout theme={theme}>
+        <MainLayout theme={theme} isLoading={isLoading}>
             <S.MainInfo>
                 <S.MainTitleBox>
                     <S.MainSuperTitle>

@@ -15,7 +15,7 @@ export const CoursePage = ({theme, isShowButton}) => {
 
     const dispatch = useDispatch()
     const { id } = useParams()
-    const { data } = useGetCourseQuery(id)   
+    const { data, isLoading } = useGetCourseQuery(id)   
     const course = useSelector(currentCourseSelector)
 
     useEffect(() => {
@@ -25,7 +25,7 @@ export const CoursePage = ({theme, isShowButton}) => {
     }, [data])
 
     return (
-        <MainLayout theme={theme} isShowButton={isShowButton}>
+        <MainLayout theme={theme} isShowButton={isShowButton} isLoading={isLoading}>
             <S.CoursePageContainer>
                 <S.TitleBox>
                     <S.Title>{course.nameRU}</S.Title>

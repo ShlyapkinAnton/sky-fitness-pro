@@ -93,10 +93,11 @@ export const MainCards = styled.div`
 `
 
 // FitnessCard
-export const FitnessCard = styled(NavLink)`
+export const FitnessCard = styled.div`
     position: relative;
     border-radius: 30px;
     box-shadow: 10px -10px 16px 0px #0000001A, -10px 10px 16px 0px #0000001A;
+    cursor: pointer;
 `
 
 export const FitnessCardTitle = styled.h3`

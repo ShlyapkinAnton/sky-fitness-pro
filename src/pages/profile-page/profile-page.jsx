@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
 import * as S from './profile-page.styles';
-import { Container } from '../../styles/common.styles';
-import { Header } from '../../components/header/header';
 import { UpdateUserData } from '../../components/updata-user-data/updata-user-data';
 import { userFitnessCards } from '../../mock/courses-data'
+import { MainLayout } from '../../layouts/main-layout/main-layout';
+import { useGetWorkoutsQuery } from '../../serviceQuery/courses';
+import { WorkoutsModal } from '../../components/workouts-modal/workouts-modal';
 
 export const ProfilePage = () => {
     const [isLoginMode, setIsLoginMode] = useState(null);
@@ -11,20 +12,26 @@ export const ProfilePage = () => {
     const handleLoginClick = () => {setLoginShow(!loginShow); setIsLoginMode(true);}
     const [passwordShow, setPasswordShow] = useState(false)
     const handlePasswordClick = () => {setPasswordShow(!passwordShow); setIsLoginMode(false);}
+    const {data, isLoading} = useGetWorkoutsQuery();
+    const [isShowWorkouts, setShowWorkouts] = useState(false)
 
     const [isActive, setIsActive] = useState(false);
     useEffect(() => {
-        if (loginShow === true || passwordShow === true) {
+        if (loginShow || passwordShow) {
             setIsActive(true);
         }
-    }, [loginShow, passwordShow])
+    }, [loginShow, passwordShow, data])
 
+    const handleShowWorkoutsModal = () => {
+        if (isShowWorkouts) {
+            setShowWorkouts(false);
+            return;
+        }
+        setShowWorkouts(true);
+    }
 
     return (
-        <S.Main>
-            <Container>
-                <Header theme='white' isLoggedIn="true" />
-
+            <MainLayout theme='white' isLoggedIn="true" isLoading={isLoading}>
                 <S.MainInfo>
                     <S.MainTitle>Мой профиль</S.MainTitle>
                     <S.MainTextBlock>
@@ -40,7 +47,7 @@ export const ProfilePage = () => {
                     {
                         userFitnessCards.map(({title, img}) => {
                             return (
-                                <S.FitnessCard key={title} to='/workout/'>
+                                <S.FitnessCard key={title} onClick={handleShowWorkoutsModal}>
                                     <S.FitnessCardTitle>
                                         {title}
                                     </S.FitnessCardTitle>
@@ -54,8 +61,7 @@ export const ProfilePage = () => {
                 {isActive && <UpdateUserData isLoginMode={isLoginMode} setIsActive={setIsActive}/> }
                 {/* {loginShow && <UpdateUserData isLoginMode={isLoginMode} /> }
                 {passwordShow && <UpdateUserData isLoginMode={isLoginMode} />} */}
-
-            </Container>
-        </S.Main>
+                {isShowWorkouts && <WorkoutsModal action={handleShowWorkoutsModal} data={data} />}
+            </MainLayout>
     )
 }
