@@ -2,20 +2,23 @@ import { Logo } from "../logo/logo.jsx";
 import * as S from './header.styles.js';
 import { useState } from 'react';
 import { NavMenu } from '../../components/nav-menu/nav-menu.jsx';
+import { useSelector } from 'react-redux'
 
-export const Header = ({theme, isLoggedIn = false, isShowButton = true}) => {
+export const Header = ({theme, isShowButton = true}) => {
     const [showMore, setShowMore] = useState(false)
     const handleMoreClick = () => {setShowMore(!showMore)}
+    const user = useSelector((state) => state.auth);
+
     return (
         <S.Header $theme={theme}>
             <S.HeaderContainer>
                 <Logo theme={theme}/>
                 {isShowButton && (
-                    <>{!isLoggedIn ? <S.HeaderButton to='/auth'>Войти</S.HeaderButton> : 
+                    <>{!user.userName ? <S.HeaderButton to='/auth'>Войти</S.HeaderButton> : 
                     <S.ProfileBlock onClick={() => handleMoreClick()}>
                         <S.ProfileIcon></S.ProfileIcon>
                         <S.ProfileMail>
-                            sergey.petrov96@gmail.com
+                            {user.userName}
                             {showMore && <NavMenu /> }
                         </S.ProfileMail>
                         <S.ProfileSvg>

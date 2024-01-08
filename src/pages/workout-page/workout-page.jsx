@@ -3,7 +3,7 @@ import { MainLayout } from '../../layouts/main-layout/main-layout';
 import { useParams } from 'react-router';
 import { useGetWorkoutQuery } from '../../serviceQuery/courses';
 
-export const WorkoutPage = ({theme, isLoggedIn}) => {
+export const WorkoutPage = ({theme}) => {
     const {id} = useParams();
     const { data, isLoading } = useGetWorkoutQuery(id);
 
@@ -18,7 +18,7 @@ export const WorkoutPage = ({theme, isLoggedIn}) => {
     }
 
     return (
-        <MainLayout theme={theme} isLoggedIn={isLoggedIn} isLoading={isLoading}>
+        <MainLayout theme={theme} isLoading={isLoading}>
             <S.WorkoutPageContainer>
                 <S.TitleBox>
                     <S.Title>Йога</S.Title>

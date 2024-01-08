@@ -5,6 +5,7 @@ import { userFitnessCards } from '../../mock/courses-data'
 import { MainLayout } from '../../layouts/main-layout/main-layout';
 import { useGetWorkoutsQuery } from '../../serviceQuery/courses';
 import { WorkoutsModal } from '../../components/workouts-modal/workouts-modal';
+import { useSelector } from 'react-redux'
 
 export const ProfilePage = () => {
     const [isLoginMode, setIsLoginMode] = useState(null);
@@ -14,6 +15,7 @@ export const ProfilePage = () => {
     const handlePasswordClick = () => {setPasswordShow(!passwordShow); setIsLoginMode(false);}
     const {data, isLoading} = useGetWorkoutsQuery();
     const [isShowWorkouts, setShowWorkouts] = useState(false)
+    const user = useSelector((state) => state.auth);
 
     const [isActive, setIsActive] = useState(false);
     useEffect(() => {
@@ -31,11 +33,11 @@ export const ProfilePage = () => {
     }
 
     return (
-            <MainLayout theme='white' isLoggedIn="true" isLoading={isLoading}>
+            <MainLayout theme='white' isLoading={isLoading}>
                 <S.MainInfo>
                     <S.MainTitle>Мой профиль</S.MainTitle>
                     <S.MainTextBlock>
-                        <S.MainText>Логин: sergey.petrov96@gmail.com</S.MainText>
+                        <S.MainText>Логин: {user.userName}</S.MainText>
                         <S.MainText>Пароль: 12345678</S.MainText>
                     </S.MainTextBlock>
                     <S.MainButtonBlock>
@@ -59,8 +61,6 @@ export const ProfilePage = () => {
                     }
                 </S.MainCards>
                 {isActive && <UpdateUserData isLoginMode={isLoginMode} setIsActive={setIsActive}/> }
-                {/* {loginShow && <UpdateUserData isLoginMode={isLoginMode} /> }
-                {passwordShow && <UpdateUserData isLoginMode={isLoginMode} />} */}
                 {isShowWorkouts && <WorkoutsModal action={handleShowWorkoutsModal} data={data} />}
             </MainLayout>
     )
