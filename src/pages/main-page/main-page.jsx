@@ -20,6 +20,7 @@ export const MainPage = ({theme}) => {
         if (data) {
             const arr = Object.values(data).sort((a, b) => a.order - b.order)
             dispatch(setAllCourses(arr))
+            localStorage.setItem('allCourses', JSON.stringify(data))
             setErrorFetch(null)
         }
     

@@ -3,19 +3,11 @@ import * as S from './workouts-modal.style';
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
 
-export const WorkoutsModal = ({ action, data }) => {
-    const [workoutsIds, setWorkoutsIds] = useState([]);
+export const WorkoutsModal = ({ action, data, courseId }) => {
     const navigate = useNavigate()
 
-    useEffect(() => {
-        if (data) {
-            const keys = Object.keys(data)
-            setWorkoutsIds(keys)
-        }
-    }, [data])
-
     const handleNavigate = (id) => {
-        navigate(`workout/${id}`)
+        navigate(`workout/${courseId}/${id}`)
     }
 
     return (
@@ -26,11 +18,11 @@ export const WorkoutsModal = ({ action, data }) => {
                     Выберите тренировку
                 </S.WorkoutsModalTitle>
                 <S.WorkoutsModalContent>
-                    {workoutsIds.map((id) => {
+                    {data.map((item) => {
                         return (
-                            <S.WorkoutsModalItem key={id} onClick={() => handleNavigate(data[id]._id)}>
+                            <S.WorkoutsModalItem key={item._id} onClick={() => handleNavigate(item._id)}>
                                 <S.WorkoutsModalItemTitle>
-                                    {data[id].name}
+                                    {item.name}
                                 </S.WorkoutsModalItemTitle>
                             </S.WorkoutsModalItem>
                         )

@@ -9,7 +9,7 @@ import { ProtectedRoute } from './components/protected-route/protectedRoute'
 
 export const AppRoutes = ({ userData }) => {
     const user = userData?.userName;
-
+    
     return (
         <Routes>
             <Route  path="/" element={<MainPage theme='dark'/>} /> 
@@ -18,7 +18,7 @@ export const AppRoutes = ({ userData }) => {
             
             <Route element={<ProtectedRoute isAllowed={Boolean(user)} />}>
                 <Route  path="/profile" element={<ProfilePage/>} />
-                <Route  path="/profile/workout/:id" element={<WorkoutPage theme='light' />} />
+                <Route  path="/profile/workout/:courseId/:id" element={<WorkoutPage theme='light' />} />
             </Route>
         </Routes>
     )
