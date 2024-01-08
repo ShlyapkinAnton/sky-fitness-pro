@@ -16,6 +16,9 @@ export const ProfilePage = () => {
     const {data, isLoading} = useGetWorkoutsQuery();
     const [isShowWorkouts, setShowWorkouts] = useState(false)
     const user = useSelector((state) => state.auth);
+    const courses = JSON.parse(localStorage.getItem('allCourses')) || {};
+    const [workoutsData, setWorkoutsData] = useState([])
+    const [courseId, setCourseId] = useState(null)
 
     const [isActive, setIsActive] = useState(false);
     useEffect(() => {
@@ -24,11 +27,14 @@ export const ProfilePage = () => {
         }
     }, [loginShow, passwordShow, data])
 
-    const handleShowWorkoutsModal = () => {
+    const handleShowWorkoutsModal = (id) => {
         if (isShowWorkouts) {
             setShowWorkouts(false);
             return;
         }
+
+        setWorkoutsData(courses[id].workouts.map(id => data[id]))
+        setCourseId(id)
         setShowWorkouts(true);
     }
 
@@ -47,9 +53,9 @@ export const ProfilePage = () => {
                 </S.MainInfo> 
                 <S.MainCards>
                     {
-                        userFitnessCards.map(({title, img}) => {
+                        userFitnessCards.map(({title, img, id}) => {
                             return (
-                                <S.FitnessCard key={title} onClick={handleShowWorkoutsModal}>
+                                <S.FitnessCard key={title} onClick={() => handleShowWorkoutsModal(id)}>
                                     <S.FitnessCardTitle>
                                         {title}
                                     </S.FitnessCardTitle>
@@ -61,7 +67,7 @@ export const ProfilePage = () => {
                     }
                 </S.MainCards>
                 {isActive && <UpdateUserData isLoginMode={isLoginMode} setIsActive={setIsActive}/> }
-                {isShowWorkouts && <WorkoutsModal action={handleShowWorkoutsModal} data={data} />}
+                {isShowWorkouts && <WorkoutsModal action={handleShowWorkoutsModal} data={workoutsData} courseId={courseId} />}
             </MainLayout>
     )
 }
