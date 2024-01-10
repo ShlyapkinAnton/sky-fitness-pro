@@ -36,8 +36,6 @@ export const AuthPage = ({theme}) => {
             }),
         )
       })
-      // console.log('login-response', response)
-      // dispatch(setAuth(response))
       setButtonActive(true)
       navigate('/', { replace: true })
       setError(null)
@@ -71,8 +69,6 @@ export const AuthPage = ({theme}) => {
             }),
         )
     })
-      // console.log('reg-response', response)
-      // dispatch(setAuth(response))
       setButtonActive(true)
       navigate('/', { replace: true })
       setError(null)

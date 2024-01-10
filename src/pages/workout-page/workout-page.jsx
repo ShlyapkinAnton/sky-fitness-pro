@@ -1,11 +1,16 @@
 import * as S from './workout-page.styles';
 import { MainLayout } from '../../layouts/main-layout/main-layout';
 import { useParams } from 'react-router';
-import { useGetWorkoutQuery } from '../../serviceQuery/courses';
+import { useGetWorkoutQuery, useGetCoursesQuery } from '../../serviceQuery/courses';
+import { setCurrentPage } from '../../store/slices/courses';
+import { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 
 export const WorkoutPage = ({theme}) => {
-    const {id} = useParams();
+    const dispatch = useDispatch();
+    const { courseId, id } = useParams();
     const { data, isLoading } = useGetWorkoutQuery(id);
+    const courses = useGetCoursesQuery();
 
     const getExerciseName = (exercise) => {
         const [ name ] = exercise.split('(');
@@ -17,11 +22,17 @@ export const WorkoutPage = ({theme}) => {
         return progressBarColors[index % progressBarColors.length]
     }
 
+    useEffect(() => {
+        if (courses) {
+            dispatch(setCurrentPage('workout'))
+        }
+    }, [courses])
+
     return (
         <MainLayout theme={theme} isLoading={isLoading}>
             <S.WorkoutPageContainer>
                 <S.TitleBox>
-                    <S.Title>Йога</S.Title>
+                    <S.Title>{courses.data[courseId]?.nameRU}</S.Title>
                     <S.WorkoutText>{data?.name}</S.WorkoutText>
                 </S.TitleBox>
 

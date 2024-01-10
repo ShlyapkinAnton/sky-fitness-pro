@@ -62,7 +62,7 @@ export const ProfileMail = styled.span`
     text-align: right;
     margin-left: 15px;
     margin-right: 12px;
-    color: black;
+    color: ${(props) => props.page === 'main' ? 'white' : 'black'}; 
     max-width: 10rem;
     white-space: nowrap;
     overflow: hidden;

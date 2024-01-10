@@ -3,8 +3,8 @@ import { createSlice } from '@reduxjs/toolkit'
 const initialState = {
     allCourses: [],
     currentCourse: [],
-    allCursesCards: [],
-    allWorkouts: {}
+    allWorkouts: {},
+    currentPage: '',
 }
 
 const coursesSlice = createSlice({
@@ -20,15 +20,17 @@ const coursesSlice = createSlice({
         setAllWorkouts: (state, action) => {
             state.allWorkouts = action.payload;
         },
-
+        setCurrentPage: (state, action) => {
+            state.currentPage = action.payload
+        },
     },
 })
 
 export const {
     setAllCourses,
     setCurrentCourse,
-    setAllWorkouts
-
+    setAllWorkouts,
+    setCurrentPage
 } = coursesSlice.actions
 
 export default coursesSlice.reducer

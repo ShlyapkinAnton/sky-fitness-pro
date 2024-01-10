@@ -7,7 +7,7 @@ export const fitnessCards = [
 ]
 
 export const userFitnessCards = [
-    {title: 'Йога', img: 'card1'},
-    {title: 'Стретчинг', img: 'card2'},
-    {title: 'Бодифлекс', img: 'card5'},
+    {title: 'Йога', img: 'card1', id: 'ab1c3f'},
+    {title: 'Стретчинг', img: 'card2', id: 'kfpq8e'},
+    {title: 'Бодифлекс', img: 'card5', id: 'q02a6i'},
 ]
