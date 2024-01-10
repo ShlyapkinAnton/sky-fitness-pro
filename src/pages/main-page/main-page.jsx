@@ -4,7 +4,7 @@ import { MainLayout } from '../../layouts/main-layout/main-layout';
 import { fitnessCards } from '../../mock/courses-data';
 import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { setAllCourses } from '../../store/slices/courses'
+import { setAllCourses, setCurrentPage } from '../../store/slices/courses'
 import { useGetCoursesQuery } from '../../serviceQuery/courses'
 
 export const MainPage = ({theme}) => {
@@ -21,6 +21,7 @@ export const MainPage = ({theme}) => {
             const arr = Object.values(data).sort((a, b) => a.order - b.order)
             dispatch(setAllCourses(arr))
             setErrorFetch(null)
+            dispatch(setCurrentPage('main'))
         }
     
         if (isError) {

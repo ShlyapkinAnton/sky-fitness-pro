@@ -7,7 +7,7 @@ import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { currentCourseSelector } from '../../store/selectors/courses'
 import { useGetCourseQuery } from '../../serviceQuery/courses'
-import { setCurrentCourse } from '../../store/slices/courses'
+import { setCurrentCourse, setCurrentPage } from '../../store/slices/courses'
 
 export const CoursePage = ({theme, isShowButton}) => {
     const [show, setShow] = useState(false)
@@ -21,6 +21,7 @@ export const CoursePage = ({theme, isShowButton}) => {
     useEffect(() => {
         if (data) {
             dispatch(setCurrentCourse(data))
+            dispatch(setCurrentPage('course'))
         }
     }, [data])
 

@@ -2,8 +2,12 @@ import * as S from './workout-page.styles';
 import { MainLayout } from '../../layouts/main-layout/main-layout';
 import { useParams } from 'react-router';
 import { useGetWorkoutQuery, useGetCoursesQuery } from '../../serviceQuery/courses';
+import { setCurrentPage } from '../../store/slices/courses';
+import { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 
 export const WorkoutPage = ({theme}) => {
+    const dispatch = useDispatch();
     const { courseId, id } = useParams();
     const { data, isLoading } = useGetWorkoutQuery(id);
     const courses = useGetCoursesQuery();
@@ -17,6 +21,12 @@ export const WorkoutPage = ({theme}) => {
         const progressBarColors = ["#565EEF", "#FF6D00", "#9A48F1"];
         return progressBarColors[index % progressBarColors.length]
     }
+
+    useEffect(() => {
+        if (courses) {
+            dispatch(setCurrentPage('workout'))
+        }
+    }, [courses])
 
     return (
         <MainLayout theme={theme} isLoading={isLoading}>
