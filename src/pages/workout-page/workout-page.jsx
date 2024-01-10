@@ -1,12 +1,12 @@
 import * as S from './workout-page.styles';
 import { MainLayout } from '../../layouts/main-layout/main-layout';
 import { useParams } from 'react-router';
-import { useGetWorkoutQuery } from '../../serviceQuery/courses';
+import { useGetWorkoutQuery, useGetCoursesQuery } from '../../serviceQuery/courses';
 
 export const WorkoutPage = ({theme}) => {
     const { courseId, id } = useParams();
     const { data, isLoading } = useGetWorkoutQuery(id);
-    const courses = JSON.parse(localStorage.getItem('allCourses')) || {};
+    const courses = useGetCoursesQuery();
 
     const getExerciseName = (exercise) => {
         const [ name ] = exercise.split('(');
@@ -22,7 +22,7 @@ export const WorkoutPage = ({theme}) => {
         <MainLayout theme={theme} isLoading={isLoading}>
             <S.WorkoutPageContainer>
                 <S.TitleBox>
-                    <S.Title>{courses[courseId]?.nameRU}</S.Title>
+                    <S.Title>{courses.data[courseId]?.nameRU}</S.Title>
                     <S.WorkoutText>{data?.name}</S.WorkoutText>
                 </S.TitleBox>
 

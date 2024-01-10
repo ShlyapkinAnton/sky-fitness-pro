@@ -3,7 +3,7 @@ import * as S from './profile-page.styles';
 import { UpdateUserData } from '../../components/updata-user-data/updata-user-data';
 import { userFitnessCards } from '../../mock/courses-data'
 import { MainLayout } from '../../layouts/main-layout/main-layout';
-import { useGetWorkoutsQuery } from '../../serviceQuery/courses';
+import { useGetWorkoutsQuery, useGetCoursesQuery } from '../../serviceQuery/courses';
 import { WorkoutsModal } from '../../components/workouts-modal/workouts-modal';
 import { useSelector } from 'react-redux'
 
@@ -16,7 +16,7 @@ export const ProfilePage = () => {
     const {data, isLoading} = useGetWorkoutsQuery();
     const [isShowWorkouts, setShowWorkouts] = useState(false)
     const user = useSelector((state) => state.auth);
-    const courses = JSON.parse(localStorage.getItem('allCourses')) || {};
+    const courses = useGetCoursesQuery();
     const [workoutsData, setWorkoutsData] = useState([])
     const [courseId, setCourseId] = useState(null)
 
@@ -33,7 +33,7 @@ export const ProfilePage = () => {
             return;
         }
 
-        setWorkoutsData(courses[id].workouts.map(id => data[id]))
+        setWorkoutsData(courses.data[id].workouts.map(id => data[id]))
         setCourseId(id)
         setShowWorkouts(true);
     }
