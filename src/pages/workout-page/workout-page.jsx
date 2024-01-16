@@ -1,3 +1,4 @@
+import React, {useState} from 'react';
 import * as S from './workout-page.styles';
 import { MainLayout } from '../../layouts/main-layout/main-layout';
 import { useParams } from 'react-router';
@@ -5,12 +6,55 @@ import { useGetWorkoutQuery, useGetCoursesQuery } from '../../serviceQuery/cours
 import { setCurrentPage } from '../../store/slices/courses';
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { InputResult } from '../../components/input-result/inputResult';
+import { ProgressBlock } from '../../components/progress-block/progress-block.styles';
 
 export const WorkoutPage = ({theme}) => {
     const dispatch = useDispatch();
     const { courseId, id } = useParams();
     const { data, isLoading } = useGetWorkoutQuery(id);
     const courses = useGetCoursesQuery();
+    const [isInputResultActive, setIsInputResultActive] = useState(false);
+    const [isProgressDone, setIsProgressDone] = useState(false);
+    const [result, setResult] = useState([0,0,0,0,0])
+
+    let quantity;
+    let newUserInputData = [];
+    let userInputData = [];
+
+    const setInputProgress = () =>{
+        !isInputResultActive ? setIsInputResultActive(true) : setIsInputResultActive(false);
+        console.log(data.exercises);
+    }
+    
+    const setProgressDone = () =>{
+        !isProgressDone ? setIsProgressDone(true) : setIsProgressDone(false);
+        setIsInputResultActive(false)
+    }
+
+    console.log(isInputResultActive);
+    
+    const countResultGuantity = (quantity, index)=>{
+    userInputData[index] = quantity;    
+    
+    console.log(quantity);
+        console.log(userInputData);
+    }
+    
+    // Функция расчета результатов
+    const countResultExersise = ()=>{
+        let newResult = []
+        console.log(`считаем результаты`);
+        console.log(userInputData);
+        let exercise = data.exercises;
+        for(let i = 0; i < userInputData.length; i++){
+            newResult.push((userInputData[i]/data.exercises[i].quantity)*100);
+        }  
+
+        console.log(result);
+        setResult(newResult);
+    }
+
 
     const getExerciseName = (exercise) => {
         const [ name ] = exercise.split('(');
@@ -57,9 +101,62 @@ export const WorkoutPage = ({theme}) => {
                                 )
                             })}
                         </S.WorkoutExerciseTextBox>
-                        <S.WorkoutExerciseButton>Заполнить свой прогресс</S.WorkoutExerciseButton>
+                            <S.WorkoutExerciseButton onClick={()=>{
+                                
+                                setInputProgress()
+                                 
+                                }}>Заполнить свой прогресс
+                            </S.WorkoutExerciseButton>
+                    {isInputResultActive ? (
+                        <S.PageContainer>
+                            <S.ModalForm2>
+                                <S.CloseArea src='/img/close.svg' alt='close' onClick={()=>{setInputProgress()}}>
+                                {/* <svg width="20px" height="20px" viewBox="0 0 25 25" xmlns="http://www.w3.org/2000/svg" fill="#000000"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"><title>cross</title><desc>Created with Sketch Beta.</desc><defs></defs><g id="Page-1" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd" ><g id="Icon-Set-Filled" transform="translate(-469.000000, -1041.000000)" fill="#b1aaaa"><path d="M487.148,1053.48 L492.813,1047.82 C494.376,1046.26 494.376,1043.72 492.813,1042.16 C491.248,1040.59 488.712,1040.59 487.148,1042.16 L481.484,1047.82 L475.82,1042.16 C474.257,1040.59 471.721,1040.59 470.156,1042.16 C468.593,1043.72 468.593,1046.26 470.156,1047.82 L475.82,1053.48 L470.156,1059.15 C468.593,1060.71 468.593,1063.25 470.156,1064.81 C471.721,1066.38 474.257,1066.38 475.82,1064.81 L481.484,1059.15 L487.148,1064.81 C488.712,1066.38 491.248,1066.38 492.813,1064.81 C494.376,1063.25 494.376,1060.71 492.813,1059.15 L487.148,1053.48" id="cross"></path></g></g></g></svg> */}
+                                
+                                </S.CloseArea>
+                                <S.ProgressBox>
+                                   <S.ProgressBoxTitle>Мой прогресс</S.ProgressBoxTitle>
+                                   {/* далее должен быть цикл по массиву упражнений */}
+                                   {data?.exercises?.map((exercise, index) => {
+                                return (
+                                    
+                                    <S.ResultInputBox key={index}>
+                                        <S.ResultInputText >{exercise.name}</S.ResultInputText>
+                                        <S.ResultInput type="number" step="1" min="0" placeholder='Введите значение' value={quantity} onInput={(event)=>{countResultGuantity(event.target.value, index)}}>
+
+                                        </S.ResultInput>
+                                    </S.ResultInputBox>        
+                                    
+                                    
+                                    )
+                                        })}
+                                    
+                                    <S.ResultInputButton onClick={()=>{
+                                        countResultExersise()
+                                        setProgressDone()
+                                        }}>Отправить
+                                    </S.ResultInputButton>
+                                </S.ProgressBox>
+
+                            </S.ModalForm2>
+                        </S.PageContainer>
+                    ):(null)}
                     </S.WorkoutExercise>
 
+                    {isProgressDone ? (
+                        <S.ProgressMain >
+                        <S.ProgressBlock>
+                            <S.PageClose onClick={()=>{setIsProgressDone()}}>
+                                <svg width="20px" height="20px" viewBox="0 0 25 25" xmlns="http://www.w3.org/2000/svg" fill="#000000"><g id="SVGRepo_iconCarrier"><g id="Page-1" stroke="none" fill="none"  ><g id="Icon-Set-Filled"  transform="translate(-469.000000, -1041.000000)" fill="#b1aaaa"><path d="M487.148,1053.48 L492.813,1047.82 C494.376,1046.26 494.376,1043.72 492.813,1042.16 C491.248,1040.59 488.712,1040.59 487.148,1042.16 L481.484,1047.82 L475.82,1042.16 C474.257,1040.59 471.721,1040.59 470.156,1042.16 C468.593,1043.72 468.593,1046.26 470.156,1047.82 L475.82,1053.48 L470.156,1059.15 C468.593,1060.71 468.593,1063.25 470.156,1064.81 C471.721,1066.38 474.257,1066.38 475.82,1064.81 L481.484,1059.15 L487.148,1064.81 C488.712,1066.38 491.248,1066.38 492.813,1064.81 C494.376,1063.25 494.376,1060.71 492.813,1059.15 L487.148,1053.48" id="cross" ></path></g></g></g></svg>
+                            </S.PageClose>
+                            <S.ProgressText>Ваш прогресс засчитан!</S.ProgressText>
+                            <S.ProgressImg>
+                                <img width='400px' height='320px' src="/img/ok.svg" alt="ok" />
+                            </S.ProgressImg>
+                        </S.ProgressBlock>
+                    </S.ProgressMain>
+                     ):(null)}
+                    
                     <S.WorkoutProgress>
                         <S.WorkoutProgressHeader>Мой прогресс по тренировке:</S.WorkoutProgressHeader>
                         <S.WorkoutProgressBlock>
@@ -70,10 +167,12 @@ export const WorkoutPage = ({theme}) => {
                                         <S.WorkoutProgressText>{getExerciseName(exercise.name)}</S.WorkoutProgressText>
                                         <S.WorkoutProgressBar $color={getColor(index)}>
                                             <S.WorkoutProgressBarLine 
-                                                $width={exercise.quantity} 
+                                                $width={result[index]}
+                                                // $width={exercise.quantity} 
                                                 $color={getColor(index)}
                                             >
-                                                <S.WorkoutProgressBarSpan>{exercise.quantity}%</S.WorkoutProgressBarSpan>
+                                                {/* <S.WorkoutProgressBarSpan>{exercise.quantity}%</S.WorkoutProgressBarSpan> */}
+                                                {result[index] >= 80 ? <S.WorkoutProgressBarSpanFull>{result[index]}%</S.WorkoutProgressBarSpanFull> : <S.WorkoutProgressBarSpan>{result[index]}%</S.WorkoutProgressBarSpan>}
                                             </S.WorkoutProgressBarLine>
                                         </S.WorkoutProgressBar>
                                     </S.WorkoutProgressContent>
