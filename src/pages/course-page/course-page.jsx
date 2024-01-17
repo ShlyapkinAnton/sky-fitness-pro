@@ -20,7 +20,6 @@ export const CoursePage = ({theme, isShowButton}) => {
             localStorage.setItem('userCourses', id)
         }
         else {
-            console.log('to');
             navigate('/auth', { replace: true });
         }
     }
