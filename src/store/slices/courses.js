@@ -4,6 +4,7 @@ const initialState = {
     allCourses: [],
     currentCourse: [],
     allWorkouts: {},
+    currentWorkout: [],
     currentPage: '',
 }
 
@@ -20,6 +21,9 @@ const coursesSlice = createSlice({
         setAllWorkouts: (state, action) => {
             state.allWorkouts = action.payload;
         },
+        setCurrentWorkout: (state, action) => {
+            state.currentWorkout = action.payload
+        },
         setCurrentPage: (state, action) => {
             state.currentPage = action.payload
         },
@@ -30,6 +34,7 @@ export const {
     setAllCourses,
     setCurrentCourse,
     setAllWorkouts,
+    setCurrentWorkout,
     setCurrentPage
 } = coursesSlice.actions
 

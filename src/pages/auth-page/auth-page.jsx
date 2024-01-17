@@ -20,10 +20,31 @@ export const AuthPage = ({theme}) => {
 
   const handleLogin = async ({ email, password }) => {
 
+    if (email.length < 4) {
+      setError('Логин должен быть больше 4 символов')
+      return
+    }
+
+    if (email.includes('<') || email.includes('>')){
+      setError('Логин не может содержать < или >')
+      return
+    }
+
+    if (password.length < 4 || !/[A-Z]/.test(password)) {
+      setError('Пароль должен быть больше 4 символов и иметь хотябы одну заглавную букву')
+      return
+    }
+
+    if (password.includes('<') || password.includes('>')) {
+      setError('Пароль не может содержать < или >')
+      return
+    }
+
     if (!email || !password) {
       setError('Заполните поле ввода')
       return
     }
+
     try {
       const response = await signInWithEmailAndPassword(auth, email, password)
       .then(({ user }) => {
@@ -48,6 +69,26 @@ export const AuthPage = ({theme}) => {
   }
 
   const handleRegister = async () => {
+
+    if (email.length < 4) {
+      setError('Логин должен быть больше 4 символов')
+      return
+    }
+
+    if (email.includes('<') || email.includes('>')){
+      setError('Логин не может содержать < или >')
+      return
+    }
+
+    if (password.length < 4 || !/[A-Z]/.test(password)) {
+      setError('Пароль должен быть больше 4 символов и иметь хотябы одну заглавную букву')
+      return
+    }
+
+    if (password.includes('<') || password.includes('>')) {
+      setError('Пароль не может содержать < или >')
+      return
+    }
 
     if ( !email || !password || !repeatPassword) {
       setError('Заполните поле ввода')
@@ -95,75 +136,69 @@ export const AuthPage = ({theme}) => {
             <>
                 <S.Inputs>
                     <S.ModalInput
-                        type="email"
-                        name="login"
-                        placeholder="Логин"
-                        value={email}
-                        onChange={(event) => {
-                        setEmail(event.target.value)
-                        }}
+                      type="email"
+                      name="login"
+                      placeholder="Логин"
+                      value={email}
+                      onChange={(event) => {
+                      setEmail(event.target.value)
+                      }}
                     />
                     <S.ModalInput
-                        type="password"
-                        name="password"
-                        placeholder="Пароль"
-                        value={password}
-                        onChange={(event) => {
-                        setPassword(event.target.value)
-                        }}
+                      type="password"
+                      name="password"
+                      placeholder="Пароль"
+                      value={password}
+                      onChange={(event) => {
+                      setPassword(event.target.value)
+                      }}
                     />
                 </S.Inputs>
                 {error && <S.Error>{error}</S.Error>}
                 <S.Buttons>
-                <S.PrimaryButton
+                  <S.PrimaryButton
                     disabled={buttonActive}
                     onClick={() => handleLogin({ email, password })}
-                >
+                  >
                     {buttonActive ? 'Выполняется вход...' : 'Войти'}
-                </S.PrimaryButton>
-                <Link onClick={() => setIsLoginMode(false)} to="/auth">
+                  </S.PrimaryButton>
+                  <Link onClick={() => setIsLoginMode(false)} to="/auth">
                     <S.SecondaryButton>Зарегистрироваться</S.SecondaryButton>
-                </Link>
+                  </Link>
                 </S.Buttons>
             </>
             ) : (
             <>
                 <S.Inputs>
-                    <S.ModalInput
-                        type="email"
-                        name="login"
-                        placeholder="Логин"
-                        value={email}
-                        onChange={(event) => {
-                        setEmail(event.target.value)
-                        }}
-                    />
-                    <S.ModalInput
-                        type="new-password"
-                        name="password"
-                        placeholder="Пароль"
-                        value={password}
-                        onChange={(event) => {
-                        setPassword(event.target.value)
-                        }}
-                    />
-                    <S.ModalInput
-                        type="new-password"
-                        name="password"
-                        placeholder="Повторите пароль"
-                        value={repeatPassword}
-                        onChange={(event) => {
-                        setRepeatPassword(event.target.value)
-                        }}
-                    />
+                  <S.ModalInput
+                    type="email"
+                    name="login"
+                    placeholder="Логин"
+                    value={email}
+                    onChange={(event) => {setEmail(event.target.value)}}
+                  />
+                  <S.ModalInput
+                    type="new-password"
+                    name="password"
+                    placeholder="Пароль"
+                    value={password}
+                    onChange={(event) => {setPassword(event.target.value)}}
+                  />
+                  <S.ModalInput
+                    type="new-password"
+                    name="password"
+                    placeholder="Повторите пароль"
+                    value={repeatPassword}
+                    onChange={(event) => {setRepeatPassword(event.target.value)}}
+                  />
                 </S.Inputs>
                 {error && <S.Error>{error}</S.Error>}
                 <S.Buttons>
-                <S.PrimaryButton disabled={buttonActive} onClick={handleRegister}>
-                    {buttonActive
-                    ? 'Выполняется регистрация...'
-                    : 'Зарегистрироваться'}
-                </S.PrimaryButton>
+                  <S.PrimaryButton disabled={buttonActive} onClick={handleRegister}>
+                      {buttonActive
+                      ? 'Выполняется регистрация...'
+                      : 'Зарегистрироваться'}
+                  </S.PrimaryButton>
                 </S.Buttons>
             </>
             )}
