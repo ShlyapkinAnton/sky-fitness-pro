@@ -122,7 +122,7 @@ export const WorkoutPage = ({theme}) => {
                                     
                                     <S.ResultInputBox key={index}>
                                         <S.ResultInputText >{exercise.name}</S.ResultInputText>
-                                        <S.ResultInput type="number" step="1" min="0" placeholder='Введите значение' value={quantity} onInput={(event)=>{countResultGuantity(event.target.value, index)}}>
+                                        <S.ResultInput type="number" step="1" min="1" max="20" placeholder='Введите значение' value={quantity} onInput={(event)=>{countResultGuantity(event.target.value, index)}}>
 
                                         </S.ResultInput>
                                     </S.ResultInputBox>        

@@ -368,8 +368,9 @@ export const ResultInput = styled.input`
     border-color:#D0CECE;
     text-align: left;
     display: block;
-    /* vertical-align: bottom; */
+/* vertical-align: bottom; */
     outline: none;
+   
    
 `
 export const ResultInputButton = styled.button`
