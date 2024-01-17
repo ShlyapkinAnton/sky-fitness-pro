@@ -148,21 +148,16 @@ export const WorkoutProgressBarSpan = styled.span`
     text-align: left;
 `
 export const WorkoutProgressBarSpanFull = styled.span`
-position: relative;
-right: -4rem;
-font-size: 24px;
-font-weight: 400;
-line-height: 32px;
-letter-spacing: 0em;
-text-align: left;
-color: white;
-padding-left: 50px
+    position: relative;
+    right: -4rem;
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 32px;
+    letter-spacing: 0em;
+    text-align: left;
+    color: white;
+    padding-left: 50px
 `
-
-
-
-
-
 
 export const Modal = styled.div`
  height: 400px;
@@ -194,27 +189,27 @@ export const Modal = styled.div`
 // `
 
 export const ModalContentText = styled.a`
-//  height: 100vh;
-//  width: 100vw;
- background-color: rgba(0, 0, 0, 0);
-//  position: fixed;
- color: #FFF;
- font-variant-numeric: lining-nums proportional-nums;
- font-family: StratosSkyeng;
- font-size: 20px;
- font-style: normal;
- font-weight: 400;
- line-height: 24px;
- padding-top: 16px;
-  &:hover{
-  color: #B672FF;
-font-variant-numeric: lining-nums proportional-nums;
-font-family: StratosSkyeng;
-font-size: 20px;
-font-style: normal;
-font-weight: 400;
-line-height: 24px;
-text-decoration-line: underline;
+    //  height: 100vh;
+    //  width: 100vw;
+    background-color: rgba(0, 0, 0, 0);
+    //  position: fixed;
+    color: #FFF;
+    font-variant-numeric: lining-nums proportional-nums;
+    font-family: StratosSkyeng;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px;
+    padding-top: 16px;
+    &:hover{
+    color: #B672FF;
+    font-variant-numeric: lining-nums proportional-nums;
+    font-family: StratosSkyeng;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px;
+    text-decoration-line: underline;
 }
  `
 export const PageContainer = styled.div`
@@ -234,24 +229,25 @@ export const PageContainer = styled.div`
 
 
 export const ModalForm2 = styled.div`
-width: 444px;
-height: 554px;
-border-radius: 12px;
-background: #FFF;
+    width: 444px;
+    height: 554px;
+    border-radius: 12px;
+    background: #FFF;
 
-/* --modal-width: 366px;
---modal-height: 439px;
-position: absolute;
-left: calc(50% - (var(--modal-width) / 2));
-top: calc(50% - (var(--modal-height) / 2));
-box-sizing: border-box;
-width: var(--modal-width);
-min-height: var(--modal-height);
-background-color: #ffffff;
-border-radius: 12px;
-padding: 43px 47px 47px 40px; */
-position: relative;
-overflow-y: auto;
+    /* --modal-width: 366px;
+    --modal-height: 439px;
+    position: absolute;
+    left: calc(50% - (var(--modal-width) / 2));
+    top: calc(50% - (var(--modal-height) / 2));
+    box-sizing: border-box;
+    width: var(--modal-width);
+    min-height: var(--modal-height);
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 43px 47px 47px 40px; */
+    position: relative;
+    overflow-y: auto;
+
     position: relative;
     z-index: 1;
     &::-webkit-scrollbar {
@@ -326,17 +322,14 @@ export const ProgressBox = styled.div`
     opacity: 0.8;
     position: relative;
     z-index: 1; */
-   
 `
 export const ProgressBoxTitle = styled.span`
-color: #000;
-font-variant-numeric: lining-nums proportional-nums;
-font-family: "StratosSkyeng", sans-serif;
-font-size: 32px;
-font-style: normal;
-font-weight: 400;
-line-height: 40px;
-
+    color: #000;
+    font-variant-numeric: lining-nums proportional-nums;
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 40px;
 `
 export const ResultInputBox = styled.div`
     display: flex;
@@ -350,14 +343,12 @@ export const ResultInputBox = styled.div`
 `
 export const ResultInputText = styled.div`
     color: #000;
-font-variant-numeric: lining-nums proportional-nums;
-font-family: "StratosSkyeng", sans-serif;
-font-size: 18px;
-font-style: normal;
-font-weight: 400;
-line-height: 24px; /* 133.333% */
-letter-spacing: -0.05px;
-
+    font-variant-numeric: lining-nums proportional-nums;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px;
+    letter-spacing: -0.05px;
 `
 export const ResultInput = styled.input`
     height: 28px;
@@ -379,7 +370,6 @@ export const ResultInputButton = styled.button`
     border-radius: 5rem;
     padding: 12px 1rem 16px;
     min-width: 17rem;
-    font-family: 'StratosSkyeng', sans-serif;
     font-size: 1.25rem;
     color: rgb(255, 255, 255);
     background-color: rgb(88, 14, 162);
@@ -428,4 +418,14 @@ export const ProgressText = styled.span`
 `
 
 export const ProgressImg = styled.div`
+`
+
+export const Error = styled.div`
+  color: coral;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 24px;
+  margin-top: 10px;
+  margin-bottom: -20px;
+  text-align: left;
 `

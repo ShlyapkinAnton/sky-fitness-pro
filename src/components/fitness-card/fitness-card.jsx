@@ -2,7 +2,7 @@ import * as S from './fitness-card.styles'
 
 export const FitnessCard = ({title, img, path}) => {
     return (
-        <S.FitnessCard to={path}>
+        <S.FitnessCard to={`/course/${path}`}>
             <S.FitnessCardTitle>
                 {title}
             </S.FitnessCardTitle>
