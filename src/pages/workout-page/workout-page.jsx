@@ -36,8 +36,8 @@ export const WorkoutPage = ({theme}) => {
     // Функция расчета результатов
     const countResultExersise = () => {
         let newResult = [];
-        if (userInputData.length === numExercises.length) {
-            for (let i = 0; i < userInputData.length; i++) {
+        if (userInputData?.length === numExercises?.length) {
+            for (let i = 0; i < userInputData?.length; i++) {
                 newResult.push((userInputData[i] / data.exercises[i].quantity) * 100);
             } 
             setError(null)
