@@ -8,10 +8,22 @@ import { useDispatch, useSelector } from 'react-redux';
 import { currentCourseSelector } from '../../store/selectors/courses'
 import { useGetCourseQuery } from '../../serviceQuery/courses'
 import { setCurrentCourse, setCurrentPage } from '../../store/slices/courses'
+import { useNavigate  } from "react-router-dom";
 
 export const CoursePage = ({theme, isShowButton}) => {
     const [show, setShow] = useState(false)
-    const handleLoginClick = () => {setShow(!show)}
+    const auth = localStorage.getItem('auth')
+    const navigate = useNavigate();
+    const handleLoginClick = ({auth}) => {
+        if (!!auth) {
+            setShow(!show)
+            localStorage.setItem('userCourses', id)
+        }
+        else {
+            console.log('to');
+            navigate('/auth', { replace: true });
+        }
+    }
 
     const dispatch = useDispatch()
     const { id } = useParams()
@@ -71,7 +83,7 @@ export const CoursePage = ({theme, isShowButton}) => {
                         Оставьте заявку на пробное занятие, мы свяжемся 
                         с вами, поможем с выбором направления и тренера, с которым тренировки принесут здоровье и радость!
                     </S.SubmitApplicationText>
-                    <BaseButton action={() => handleLoginClick()} theme='dark' text='Записаться на тренировку' />
+                    <BaseButton action={() => handleLoginClick({auth})} theme='dark' text='Записаться на тренировку' />
                     <S.SubmitApplicationImg src="/img/phone.svg" alt="phone" />
                 </S.SubmitApplication>
                 {show && <ProgressBlock text = 'Вы успешно записались!' setShow={setShow}/>} 
