@@ -49,16 +49,16 @@ export const ProfilePage = () => {
         setShowWorkouts(true);
     }
 
-    // получить курс из LS и отобразить его вместо userFitnessCards
-    const courseUserId = localStorage.getItem('userCourses');
-    useEffect(() => {
-        // console.log('workoutsData', workoutsData);
-        if (courseUserId) {
-            const arr = courses.data[courseUserId].workouts.map(id => data[id])
-            console.log( arr);
-        }
-    },[data, courseUserId])
-    //
+    // // получить курс из LS и отобразить его вместо userFitnessCards
+    // const courseUserId = localStorage.getItem('userCourses');
+    // useEffect(() => {
+    //     // console.log('workoutsData', workoutsData);
+    //     if (courseUserId) {
+    //         const arr = courses.data[courseUserId].workouts.map(id => data[id])
+    //         console.log( arr);
+    //     }
+    // },[data, courseUserId])
+    // //
 
     return (
             <MainLayout theme='white' isLoading={isLoading}>
