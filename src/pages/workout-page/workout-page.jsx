@@ -29,23 +29,42 @@ export const WorkoutPage = ({theme}) => {
         setIsInputResultActive(false)
     }
     
-    const countResultGuantity = (quantity, index) => {
-        userInputData[index] = Math.abs(quantity);  
+    const countResultQuantity = (quantity, index) => {
+        if (Number.isInteger(quantity / 1)){
+            userInputData[index] = Math.abs(quantity);  
+            setError(undefined)
+        console.log(userInputData);
+        }else{
+            setError('введите целое число');
+            
+        }
+        
     }
     
     // Функция расчета результатов
     const countResultExersise = () => {
         let newResult = [];
-        if (userInputData?.length === numExercises?.length) {
-            for (let i = 0; i < userInputData?.length; i++) {
-                newResult.push((userInputData[i] / data.exercises[i].quantity) * 100);
+       
+        console.log(userInputData.length);
+        console.log(data.exercises.length);
+        if (userInputData.length === data.exercises.length) {
+            for (let i = 0; i < userInputData.length; i++) {
+                let res =  (userInputData[i] / data.exercises[i].quantity) * 100;
+                    if (res > 100) {
+                        res = 100;
+                    }
+                newResult.push(res);
+                        
             } 
-            setError(null)
+            // setError(null)
+            // setError(undefined);
             setProgressDone()
-        } else {
-            setError('Заполните поля ввода')
+            setResult(newResult);
+        } else{
+            setError('Заполните поля ввода'); 
         }
-        setResult(newResult);
+       
+        
     }
 
 
@@ -109,13 +128,14 @@ export const WorkoutPage = ({theme}) => {
                                         return (
                                             <S.ResultInputBox key={index}>
                                                 <S.ResultInputText >{exercise.name}</S.ResultInputText>
-                                                <S.ResultInput type="number" step="1" min="0" placeholder='Введите значение' value={quantity} onInput={(event)=>{countResultGuantity(event.target.value, index)}}>
+                                                <S.ResultInput type="number" step="1" min="0" placeholder='Введите значение' value={quantity} onInput={(event)=>{countResultQuantity(event.target.value, index)}}>
                                                 </S.ResultInput>
                                             </S.ResultInputBox>        
                                         )
                                     })}
                                     {error && <S.Error>{error}</S.Error>}
-                                    <S.ResultInputButton onClick={()=>{countResultExersise()}}>Отправить</S.ResultInputButton>
+                                    {error ? (<S.ResultInputButton>Отправить</S.ResultInputButton>)
+                                     : (<S.ResultInputButton onClick={()=>{countResultExersise()}}>Отправить</S.ResultInputButton>)}
                                 </S.ProgressBox>
 
                             </S.ModalForm2>
