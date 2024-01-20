@@ -2,7 +2,7 @@ import * as S from '../nav-menu/nav-menu.styles';
 
 export const NavMenu = ({page}) => {
   const handleLogout = () => {
-    localStorage.removeItem('auth');
+    localStorage.removeItem('auth');    
   }
 
   return (
@@ -15,7 +15,7 @@ export const NavMenu = ({page}) => {
           <S.MenuLink to="/profile" page={page} >Профиль</S.MenuLink>
         </S.MenuItem>
         <S.MenuItem  onClick={() => handleLogout()}> 
-          <S.MenuLink to="/auth" page={page} >Выйти</S.MenuLink>
+          <S.MenuLink to="/" page={page} >Выйти</S.MenuLink>
         </S.MenuItem>
       </S.MenuList>
     </S.NavMenu>

@@ -8,7 +8,7 @@ import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'fire
 import { auth } from '../../Firebase.js'
 import { setAuth } from '../../store/slices/auth'
 
-export const AuthPage = ({theme}) => {
+export const AuthPage = ({theme, setUser}) => {
   const [isLoginMode, setIsLoginMode] = useState(true)
   const dispatch = useDispatch()
   const [error, setError] = useState(null)
@@ -49,12 +49,13 @@ export const AuthPage = ({theme}) => {
       const response = await signInWithEmailAndPassword(auth, email, password)
       .then(({ user }) => {
         dispatch(
-            setAuth({
-                accessToken: user.accessToken,
-                email: user.email,
-                uid: user.uid,
-                refreshToken: user.stsTokenManager.refreshToken,
-            }),
+          setAuth({
+              accessToken: user.accessToken,
+              email: user.email,
+              uid: user.uid,
+              refreshToken: user.stsTokenManager.refreshToken,
+          }),
+          setUser(user.email)
         )
       })
       setButtonActive(true)
@@ -103,11 +104,12 @@ export const AuthPage = ({theme}) => {
       .then(({ user }) => {
         dispatch(
             setAuth({
-                accessToken: user.accessToken,
-                email: user.email,
-                uid: user.uid,
-                refreshToken: user.stsTokenManager.refreshToken,
+              accessToken: user.accessToken,
+              email: user.email,
+              uid: user.uid,
+              refreshToken: user.stsTokenManager.refreshToken,
             }),
+            setUser(user.email)
         )
     })
       setButtonActive(true)

@@ -26,7 +26,7 @@ export const ProfilePage = () => {
     }, [data, isError, isLoading])
 
     const [isShowWorkouts, setShowWorkouts] = useState(false)
-    const user = useSelector((state) => state.auth);
+    const user = JSON.parse(localStorage.getItem('auth')) ?? null;
     const courses = useGetCoursesQuery();
     const [workoutsData, setWorkoutsData] = useState([])
     const [courseId, setCourseId] = useState(null)
