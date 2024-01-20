@@ -8,7 +8,7 @@ import { useDispatch } from 'react-redux';
 
 export const WorkoutPage = ({theme}) => {
     const dispatch = useDispatch();
-    const [error, setError] = useState()
+    const [error, setError] = useState(null)
     const { courseId, id } = useParams();
     const { data, isLoading } = useGetWorkoutQuery(id);
     const courses = useGetCoursesQuery();
@@ -32,13 +32,11 @@ export const WorkoutPage = ({theme}) => {
     const countResultQuantity = (quantity, index) => {
         if (Number.isInteger(quantity / 1)){
             userInputData[index] = Math.abs(quantity);  
-            setError(undefined)
-        console.log(userInputData);
-        }else{
-            setError('введите целое число');
-            
+            setError(null)
+            console.log('userInputData', userInputData);
+        } else {
+            setError('Введите целое число');
         }
-        
     }
     
     // Функция расчета результатов
@@ -56,17 +54,13 @@ export const WorkoutPage = ({theme}) => {
                 newResult.push(res);
                         
             } 
-            // setError(null)
-            // setError(undefined);
             setProgressDone()
             setResult(newResult);
         } else{
             setError('Заполните поля ввода'); 
         }
-       
-        
+        console.log(result)
     }
-
 
     const getExerciseName = (exercise) => {
         const [ name ] = exercise.split('(');
@@ -134,8 +128,7 @@ export const WorkoutPage = ({theme}) => {
                                         )
                                     })}
                                     {error && <S.Error>{error}</S.Error>}
-                                    {error ? (<S.ResultInputButton>Отправить</S.ResultInputButton>)
-                                     : (<S.ResultInputButton onClick={()=>{countResultExersise()}}>Отправить</S.ResultInputButton>)}
+                                    <S.ResultInputButton onClick={()=>{countResultExersise()}}>Отправить</S.ResultInputButton>
                                 </S.ProgressBox>
 
                             </S.ModalForm2>
