@@ -9,25 +9,65 @@ import { currentCourseSelector } from '../../store/selectors/courses'
 import { useGetCourseQuery } from '../../serviceQuery/courses'
 import { setCurrentCourse, setCurrentPage } from '../../store/slices/courses'
 import { useNavigate  } from "react-router-dom";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { db } from '../../firebase'
+import { ref, set, onValue, once, get, child } from "firebase/database";
+
 
 export const CoursePage = ({theme, isShowButton}) => {
     const [show, setShow] = useState(false)
-    const auth = localStorage.getItem('auth')
+    const userAuth = localStorage.getItem('auth')
     const navigate = useNavigate();
-    const handleLoginClick = ({auth}) => {
-        if (!!auth) {
+    const dispatch = useDispatch()
+    const { id } = useParams()
+    const { data, isLoading } = useGetCourseQuery(id)   
+    const course = useSelector(currentCourseSelector)
+    const [uid, setUid] = useState('') 
+
+    const handleLoginClick = async ({userAuth}) => {
+
+        onAuthStateChanged(getAuth(), (user) => {
+            if (user) {
+              const uid = user.uid; 
+              setUid(uid);
+            }
+        });
+
+        if (!!userAuth) {
+            // получить список курсов пользователя 
+            const dbRef = ref(db)
+            await get(child(dbRef, 'users/' + uid ))
+            .then((snapshot) => {
+                const dataRef = snapshot.val(); 
+                // добавить пользователя если его нет в дб
+                if (dataRef === null) {
+                    set(ref(db, `users/${uid}`), {
+                        uid: uid,
+                        courses: {0: id}
+                    })
+                } else {
+                    // проверка на подписанный курс
+                    console.log(dataRef.courses)
+                    if (dataRef?.courses?.includes(id, 0)) {
+                        return
+                    } else {
+                        dataRef?.courses?.push(id);
+                        set(ref(db, `users/${uid}`), {
+                            courses: dataRef.courses,
+                        })
+                    }
+                }
+            })
+            .catch((e) => {
+                console.error(e);
+            });
+
             setShow(!show)
-            localStorage.setItem('userCourses', id)
         }
         else {
             navigate('/auth', { replace: true });
         }
     }
-
-    const dispatch = useDispatch()
-    const { id } = useParams()
-    const { data, isLoading } = useGetCourseQuery(id)   
-    const course = useSelector(currentCourseSelector)
 
     useEffect(() => {
         if (data) {
@@ -82,7 +122,7 @@ export const CoursePage = ({theme, isShowButton}) => {
                         Оставьте заявку на пробное занятие, мы свяжемся 
                         с вами, поможем с выбором направления и тренера, с которым тренировки принесут здоровье и радость!
                     </S.SubmitApplicationText>
-                    <BaseButton action={() => handleLoginClick({auth})} theme='dark' text='Записаться на тренировку' />
+                    <BaseButton action={() => handleLoginClick({userAuth})} theme='dark' text='Записаться на тренировку' />
                     <S.SubmitApplicationImg src="/img/phone.svg" alt="phone" />
                 </S.SubmitApplication>
                 {show && <ProgressBlock text = 'Вы успешно записались!' setShow={setShow}/>} 

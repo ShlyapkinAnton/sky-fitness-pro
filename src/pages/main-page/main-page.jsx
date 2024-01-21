@@ -32,6 +32,10 @@ export const MainPage = ({theme}) => {
         }
     }, [data, isError])
 
+    useEffect(() => {
+        console.log( data, workout)
+    })
+
     return (
         <MainLayout theme={theme} isLoading={isLoading}>
             <S.MainInfo>

@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux'
 import { MainLayout } from '../../layouts/main-layout/main-layout';
 import { Logo } from '../../components/logo/logo'
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../../Firebase.js'
+import { auth } from '../../firebase.js'
 import { setAuth } from '../../store/slices/auth'
 
 export const AuthPage = ({theme, setUser}) => {

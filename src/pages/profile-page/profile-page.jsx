@@ -5,9 +5,8 @@ import { userFitnessCards } from '../../mock/courses-data'
 import { MainLayout } from '../../layouts/main-layout/main-layout';
 import { useGetWorkoutsQuery, useGetCoursesQuery } from '../../serviceQuery/courses';
 import { WorkoutsModal } from '../../components/workouts-modal/workouts-modal';
-import { useSelector, useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { setAllWorkouts, setCurrentPage } from '../../store/slices/courses'
-import { currentCourseSelector } from '../../store/selectors/courses'
 
 export const ProfilePage = () => {
     const dispatch = useDispatch();
@@ -49,16 +48,7 @@ export const ProfilePage = () => {
         setShowWorkouts(true);
     }
 
-    // // получить курс из LS и отобразить его вместо userFitnessCards
-    // const courseUserId = localStorage.getItem('userCourses');
-    // useEffect(() => {
-    //     // console.log('workoutsData', workoutsData);
-    //     if (courseUserId) {
-    //         const arr = courses.data[courseUserId].workouts.map(id => data[id])
-    //         console.log( arr);
-    //     }
-    // },[data, courseUserId])
-    // //
+    
 
     return (
             <MainLayout theme='white' isLoading={isLoading}>
