@@ -10,8 +10,9 @@ import { useGetCourseQuery } from '../../serviceQuery/courses'
 import { setCurrentCourse, setCurrentPage } from '../../store/slices/courses'
 import { useNavigate  } from "react-router-dom";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { db } from '../../firebase'
-import { ref, set, onValue, once, get, child } from "firebase/database";
+import { db, app } from '../../firebase'
+import { getDatabase, ref, set, onValue, once, get, child } from "firebase/database";
+import firebase from '../../firebase';
 
 
 export const CoursePage = ({theme, isShowButton}) => {
@@ -33,15 +34,15 @@ export const CoursePage = ({theme, isShowButton}) => {
             }
         });
 
-        if (!!userAuth) {
+        if (!!userAuth) { 
             // получить список курсов пользователя 
-            const dbRef = ref(db)
+            const dbRef = ref(getDatabase(app))
             await get(child(dbRef, 'users/' + uid ))
             .then((snapshot) => {
                 const dataRef = snapshot.val(); 
                 // добавить пользователя если его нет в дб
                 if (dataRef === null) {
-                    set(ref(db, `users/${uid}`), {
+                    set(ref(getDatabase(app), `users/${uid}`), {
                         uid: uid,
                         courses: {0: id}
                     })
@@ -52,7 +53,7 @@ export const CoursePage = ({theme, isShowButton}) => {
                         return
                     } else {
                         dataRef?.courses?.push(id);
-                        set(ref(db, `users/${uid}`), {
+                        set(ref(getDatabase(app), `users/${uid}`), {
                             courses: dataRef.courses,
                         })
                     }
