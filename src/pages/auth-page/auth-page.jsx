@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux'
 import { MainLayout } from '../../layouts/main-layout/main-layout';
 import { Logo } from '../../components/logo/logo'
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
-import { auth, app } from '../../firebase.js'
+// import { auth, app } from '../../firebase.js'
 import { getAuth } from "firebase/auth"
 import { setAuth } from '../../store/slices/auth'
 import firebase from '../../firebase';
