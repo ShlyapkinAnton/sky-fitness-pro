@@ -1,6 +1,6 @@
+import * as S from './course-page.style';
 import { BaseButton } from "../../components/button/button";
 import { MainLayout } from "../../layouts/main-layout/main-layout";
-import * as S from './course-page.style';
 import { ProgressBlock } from '../../components/progress-block/progress-block'
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
