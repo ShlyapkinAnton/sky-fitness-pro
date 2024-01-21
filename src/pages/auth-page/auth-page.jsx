@@ -8,6 +8,7 @@ import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'fire
 import { auth, app } from '../../firebase.js'
 import { getAuth } from "firebase/auth"
 import { setAuth } from '../../store/slices/auth'
+import firebase from '../../firebase';
 
 export const AuthPage = ({theme, setUser}) => {
   const [isLoginMode, setIsLoginMode] = useState(true)
