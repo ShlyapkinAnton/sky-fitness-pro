@@ -19,6 +19,11 @@ export const coursesQuery = createApi({
                 url: `courses/${id}.json`,
             }),
         }),
+        getCoursesUser: build.query({
+            query: (uid) => ({
+                url: `users/${uid}/courses.json`,
+            }),
+        }),
         getWorkouts: build.query({
             query: () => ({
                 url: `workouts.json`,
@@ -32,4 +37,4 @@ export const coursesQuery = createApi({
     }),
 })
 
-export const { useGetCoursesQuery, useGetCourseQuery, useGetWorkoutsQuery, useGetWorkoutQuery } = coursesQuery    
+export const { useGetCoursesQuery, useGetCourseQuery, useGetCoursesUserQuery, useGetWorkoutsQuery, useGetWorkoutQuery } = coursesQuery    

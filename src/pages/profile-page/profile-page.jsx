@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
 import * as S from './profile-page.styles';
 import { UpdateUserData } from '../../components/updata-user-data/updata-user-data';
+import { Card } from '../../components/null-card/null-card';
 import { userFitnessCards } from '../../mock/courses-data'
 import { MainLayout } from '../../layouts/main-layout/main-layout';
-import { useGetWorkoutsQuery, useGetCoursesQuery } from '../../serviceQuery/courses';
+import { useGetWorkoutsQuery, useGetCoursesQuery, useGetCoursesUserQuery } from '../../serviceQuery/courses';
 import { WorkoutsModal } from '../../components/workouts-modal/workouts-modal';
 import { useDispatch } from 'react-redux'
 import { setAllWorkouts, setCurrentPage } from '../../store/slices/courses'
@@ -29,6 +30,18 @@ export const ProfilePage = () => {
     const courses = useGetCoursesQuery();
     const [workoutsData, setWorkoutsData] = useState([])
     const [courseId, setCourseId] = useState(null)
+
+    const [courseUser, setCourseUser] = useState()
+    const uid = JSON.parse(localStorage.getItem('auth')).userID
+    const arrCourseUser = useGetCoursesUserQuery(uid).currentData;
+    useEffect(() => {
+        // if (arrCourseUser?.find((item) => item.id !== 'null')) {
+        //     console.log('item', item);
+        // }
+        setCourseUser(arrCourseUser)
+        console.log(courseUser);
+    },[arrCourseUser, courseUser]);
+
 
     const [isActive, setIsActive] = useState(false);
     useEffect(() => {
@@ -64,7 +77,7 @@ export const ProfilePage = () => {
                     </S.MainButtonBlock>
                 </S.MainInfo> 
                 <S.MainCards>
-                    {userFitnessCards.map(({title, img, id}) => {
+                    {courseUser ? courseUser.map(({id, img, title}) => {
                         return (
                             <S.FitnessCard key={title} onClick={() => handleShowWorkoutsModal(id)}>
                                 <S.FitnessCardTitle>
@@ -74,7 +87,8 @@ export const ProfilePage = () => {
                                 <S.FitnessCardButton type="button">Перейти</S.FitnessCardButton>
                             </S.FitnessCard>
                         )
-                    })}
+                    }) : (<Card/>)
+                    }
                 </S.MainCards>
                 {isActive && <UpdateUserData isLoginMode={isLoginMode} setIsActive={setIsActive}/> }
                 {isShowWorkouts && <WorkoutsModal action={handleShowWorkoutsModal} data={workoutsData} courseId={courseId} />}

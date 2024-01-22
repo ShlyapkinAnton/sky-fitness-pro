@@ -26,6 +26,7 @@ export const CoursePage = ({theme, isShowButton}) => {
     const [uid, setUid] = useState('') 
 
     const handleLoginClick = async ({userAuth}) => {
+        console.log(course.nameRU, course.nameEN, id)
 
         onAuthStateChanged(getAuth(), (user) => {
             if (user) {
@@ -45,16 +46,17 @@ export const CoursePage = ({theme, isShowButton}) => {
                 if (dataRef === null) {
                     set(ref(db, `users/${uid}`), {
                         uid: uid,
-                        courses: {0: id}
+                        courses: [{id: id, img: course.nameEN, title: course.nameRU}]
                     })
                 } else {
                     // проверка на подписанный курс
-                    console.log(dataRef.courses)
-                    if (dataRef?.courses?.includes(id, 0)) {
+                    // console.log(dataRef.courses)
+                    if (dataRef?.courses?.find((item) => item.id === id)) {
                         return
                     } else {
-                        dataRef?.courses?.push(id);
+                        dataRef?.courses?.push({id: id, img: course.nameEN, title: course.nameRU});
                         set(ref(db, `users/${uid}`), {
+                            uid: uid,
                             courses: dataRef.courses,
                         })
                     }
