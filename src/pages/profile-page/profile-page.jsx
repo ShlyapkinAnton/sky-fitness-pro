@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import * as S from './profile-page.styles';
 import { UpdateUserData } from '../../components/updata-user-data/updata-user-data';
 import { Card } from '../../components/null-card/null-card';
-import { userFitnessCards } from '../../mock/courses-data'
 import { MainLayout } from '../../layouts/main-layout/main-layout';
 import { useGetWorkoutsQuery, useGetCoursesQuery, useGetCoursesUserQuery } from '../../serviceQuery/courses';
 import { WorkoutsModal } from '../../components/workouts-modal/workouts-modal';
@@ -35,11 +34,7 @@ export const ProfilePage = () => {
     const uid = JSON.parse(localStorage.getItem('auth')).userID
     const arrCourseUser = useGetCoursesUserQuery(uid).currentData;
     useEffect(() => {
-        // if (arrCourseUser?.find((item) => item.id !== 'null')) {
-        //     console.log('item', item);
-        // }
         setCourseUser(arrCourseUser)
-        console.log(courseUser);
     },[arrCourseUser, courseUser]);
 
 
@@ -61,15 +56,12 @@ export const ProfilePage = () => {
         setShowWorkouts(true);
     }
 
-    
-
     return (
             <MainLayout theme='white' isLoading={isLoading}>
                 <S.MainInfo>
                     <S.MainTitle>Мой профиль</S.MainTitle>
                     <S.MainTextBlock>
                         <S.MainText>Логин: {user.userName}</S.MainText>
-                        <S.MainText>Пароль: 12345678</S.MainText>
                     </S.MainTextBlock>
                     <S.MainButtonBlock>
                         <S.MainButton type="button" className="button" onClick={() => handleLoginClick()} >Изменить логин</S.MainButton>

@@ -26,8 +26,6 @@ export const CoursePage = ({theme, isShowButton}) => {
     const [uid, setUid] = useState('') 
 
     const handleLoginClick = async ({userAuth}) => {
-        console.log(course.nameRU, course.nameEN, id)
-
         onAuthStateChanged(getAuth(), (user) => {
             if (user) {
               const uid = user.uid; 

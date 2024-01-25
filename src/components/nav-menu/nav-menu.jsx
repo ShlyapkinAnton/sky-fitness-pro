@@ -1,8 +1,12 @@
 import * as S from '../nav-menu/nav-menu.styles';
+import { useDispatch } from 'react-redux'
+import { setAuth } from '../../store/slices/auth'
 
 export const NavMenu = ({page}) => {
+  const dispatch = useDispatch();
   const handleLogout = () => {
-    localStorage.removeItem('auth');    
+    localStorage.removeItem('auth');  
+    dispatch(setAuth({ accessToken: '', email: '', uid: '', refreshToken: ''}))
   }
 
   return (

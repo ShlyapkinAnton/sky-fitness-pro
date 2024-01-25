@@ -2,11 +2,12 @@ import * as S from './updata-user-data.styles.js';
 import { useState } from 'react';
 import { Logo } from "../logo/logo.jsx";
 import { useNavigate } from 'react-router-dom'
+import { Validate } from '../../components/validates/validate.js'
 import { getAuth, updateEmail, updatePassword } from "firebase/auth";
 
 export const UpdateUserData = ({isLoginMode, setIsActive}) => {
   const [error, setError] = useState(null);
-  const [login, setLogin] = useState('');
+  const [email, setEmail] = useState('')
   const [password, setPassword] = useState('');
   const [repeatPassword, setRepeatPassword] = useState('');
   const [buttonActive, setButtonActive] = useState(false);
@@ -14,22 +15,24 @@ export const UpdateUserData = ({isLoginMode, setIsActive}) => {
   const auth = getAuth();
   const user = auth.currentUser;
 
-  const handleLogin = async ({ login }) => {
+  const handleLogin = async ({ email }) => {
     // verifyBeforeUpdateEmail
-    if (!login) {
-      setError('Заполните поле ввода')
-      return
-    }
+    Validate({email, setError})
+
     try {
-      await updateEmail(user, login).then(() => {
-        console.log('Update successful')
-      })
+      await updateEmail(user, email).then(() => { })
       navigate('/auth', { replace: true })
       setError(null)
       setButtonActive(true)
     } catch (error) {
       console.error('Ошибка авторизации:', error.message)
-      setError(error.message)
+      if (error.message === 'Firebase: Error (auth/invalid-credential).') {
+        setError('Ошибка авторизации: Недопустимые учетные данные')
+      } else if (error.message === 'Firebase: Error (auth/invalid-email).') {
+        setError('Ошибка авторизации: Неверный адрес электронной почты')
+      } else {
+        setError(`Ошибка авторизации: ${error.message}`)
+      }
     } finally {
       setButtonActive(false)
     }
@@ -37,24 +40,21 @@ export const UpdateUserData = ({isLoginMode, setIsActive}) => {
   
   const handlePassword = async ({ password, repeatPassword }) => {
     // reauthenticateWithCredential 
-    if ( !password || !repeatPassword ) {
-      setError('Заполните поле ввода')
-      return
-    }
-    if (password !== repeatPassword) {
-      setError('Пароли не совпадают')
-      return
-    }
+    Validate({ password, repeatPassword, setError});
     try {
-      await updatePassword(user, password).then(() => {
-        console.log('Update successful')
-      })
+      await updatePassword(user, password).then(() => { })
       navigate('/auth', { replace: true })
       setError(null)
       setButtonActive(true)
     } catch (error) {
       console.error('Ошибка авторизации:', error.message)
-      setError(error.message)
+      if (error.message === 'Firebase: Error (auth/invalid-credential).') {
+        setError('Ошибка авторизации: Недопустимые учетные данные')
+      } else if (error.message === 'Firebase: Error (auth/invalid-email).') {
+        setError('Ошибка авторизации: Неверный адрес электронной почты')
+      } else {
+        setError(`Ошибка авторизации: ${error.message}`)
+      }
     } finally {
       setButtonActive(false)
     }
@@ -75,9 +75,9 @@ export const UpdateUserData = ({isLoginMode, setIsActive}) => {
                   type="text"
                   name="login"
                   placeholder="Логин"
-                  value={login}
+                  value={email}
                   onChange={(event) => {
-                  setLogin(event.target.value)
+                  setEmail(event.target.value)
                   }}
                 />
             </S.Inputs>
@@ -85,7 +85,7 @@ export const UpdateUserData = ({isLoginMode, setIsActive}) => {
             <S.Buttons>
               <S.PrimaryButton
                 disabled={buttonActive}
-                onClick={() => handleLogin({ login })}
+                onClick={() => handleLogin({ email })}
               >
                 {buttonActive ? 'Сохрание...' : 'Сохранить'}
               </S.PrimaryButton>

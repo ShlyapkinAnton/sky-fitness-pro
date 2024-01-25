@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { MainLayout } from '../../layouts/main-layout/main-layout';
 import { Logo } from '../../components/logo/logo'
+import { Validate } from '../../components/validates/validate.js'
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth, app } from '../../firebase.js'
 import { getAuth } from "firebase/auth"
@@ -23,30 +24,7 @@ export const AuthPage = ({theme, setUser}) => {
 
   const handleLogin = async ({ email, password }) => {
 
-    if (email.length < 4) {
-      setError('Логин должен быть больше 4 символов')
-      return
-    }
-
-    if (email.includes('<') || email.includes('>')){
-      setError('Логин не может содержать < или >')
-      return
-    }
-
-    if (password.length < 4 || !/[A-Z]/.test(password)) {
-      setError('Пароль должен быть больше 4 символов и иметь хотябы одну заглавную букву')
-      return
-    }
-
-    if (password.includes('<') || password.includes('>')) {
-      setError('Пароль не может содержать < или >')
-      return
-    }
-
-    if (!email || !password) {
-      setError('Заполните поле ввода')
-      return
-    }
+    Validate({email, password, setError})
 
     try {
       const response = await signInWithEmailAndPassword(auth, email, password)
@@ -66,42 +44,22 @@ export const AuthPage = ({theme, setUser}) => {
       setError(null)
     } catch (error) {
       console.error('Ошибка авторизации:', error.message)
-      setError(error.message)
+      if (error.message === 'Firebase: Error (auth/invalid-credential).') {
+        setError('Ошибка авторизации: Недопустимые учетные данные')
+      } else if (error.message === 'Firebase: Error (auth/invalid-email).') {
+        setError('Ошибка авторизации: Неверный адрес электронной почты')
+      } else {
+        setError(`Ошибка авторизации: ${error.message}`)
+      }
     } finally {
       setButtonActive(false)
     }
   }
 
-  const handleRegister = async () => {
+  const handleRegister = async ({ email, password, repeatPassword }) => {
 
-    if (email.length < 4) {
-      setError('Логин должен быть больше 4 символов')
-      return
-    }
+    Validate({email, password, repeatPassword, setError});
 
-    if (email.includes('<') || email.includes('>')){
-      setError('Логин не может содержать < или >')
-      return
-    }
-
-    if (password.length < 4 || !/[A-Z]/.test(password)) {
-      setError('Пароль должен быть больше 4 символов и иметь хотябы одну заглавную букву')
-      return
-    }
-
-    if (password.includes('<') || password.includes('>')) {
-      setError('Пароль не может содержать < или >')
-      return
-    }
-
-    if ( !email || !password || !repeatPassword) {
-      setError('Заполните поле ввода')
-      return
-    }
-    if (password !== repeatPassword) {
-      setError('Пароли не совпадают')
-      return
-    }
     try {
       const response = await createUserWithEmailAndPassword(auth, email, password)
       .then(({ user }) => {
@@ -121,7 +79,13 @@ export const AuthPage = ({theme, setUser}) => {
       setIsLoginMode(true)
     } catch (error) {
       console.error('Ошибка авторизации:', error.message)
-      setError(error.message)
+      if (error.message === 'Firebase: Error (auth/invalid-credential).') {
+        setError('Ошибка авторизации: Недопустимые учетные данные')
+      } else if (error.message === 'Firebase: Error (auth/invalid-email).') {
+        setError('Ошибка авторизации: Неверный адрес электронной почты')
+      } else {
+        setError(`Ошибка авторизации: ${error.message}`)
+      }
     } finally {
       setButtonActive(false)
     }
