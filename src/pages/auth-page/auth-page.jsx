@@ -7,9 +7,9 @@ import { Logo } from '../../components/logo/logo'
 import { Validate } from '../../components/validates/validate.js'
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth, app } from '../../firebase.js'
-import { getAuth } from "firebase/auth"
+// import { getAuth } from "firebase/auth"
 import { setAuth } from '../../store/slices/auth'
-import firebase from '../../firebase';
+// import firebase from '../../firebase';
 
 export const AuthPage = ({theme, setUser}) => {
   const [isLoginMode, setIsLoginMode] = useState(true)
