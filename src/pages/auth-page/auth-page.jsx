@@ -5,8 +5,8 @@ import { useDispatch } from 'react-redux'
 import { MainLayout } from '../../layouts/main-layout/main-layout';
 import { Logo } from '../../components/logo/logo'
 import { Validate } from '../../components/validates/validate.js'
-import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../../firebase.js'
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword, getAuth } from 'firebase/auth';
+// import { auth } from '../../firebase.js'
 import { setAuth } from '../../store/slices/auth'
 
 export const AuthPage = ({theme, setUser}) => {
@@ -24,7 +24,7 @@ export const AuthPage = ({theme, setUser}) => {
     Validate({email, password, setError})
 
     try {
-      const response = await signInWithEmailAndPassword(auth, email, password)
+      const response = await signInWithEmailAndPassword(getAuth(), email, password)
       .then(({ user }) => {
         dispatch(
           setAuth({
@@ -58,7 +58,7 @@ export const AuthPage = ({theme, setUser}) => {
     Validate({email, password, repeatPassword, setError});
 
     try {
-      const response = await createUserWithEmailAndPassword(auth, email, password)
+      const response = await createUserWithEmailAndPassword(getAuth(), email, password)
       .then(({ user }) => {
         dispatch(
             setAuth({
