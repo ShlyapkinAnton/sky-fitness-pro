@@ -6,10 +6,8 @@ import { MainLayout } from '../../layouts/main-layout/main-layout';
 import { Logo } from '../../components/logo/logo'
 import { Validate } from '../../components/validates/validate.js'
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
-import { auth, app } from '../../firebase.js'
-// import { getAuth } from "firebase/auth"
+import { auth } from '../../firebase.js'
 import { setAuth } from '../../store/slices/auth'
-// import firebase from '../../firebase';
 
 export const AuthPage = ({theme, setUser}) => {
   const [isLoginMode, setIsLoginMode] = useState(true)
@@ -20,7 +18,6 @@ export const AuthPage = ({theme, setUser}) => {
   const [repeatPassword, setRepeatPassword] = useState('')
   const navigate = useNavigate()
   const [buttonActive, setButtonActive] = useState(false)
-  // const auth = getAuth()
 
   const handleLogin = async ({ email, password }) => {
 

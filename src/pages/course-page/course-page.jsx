@@ -10,9 +10,7 @@ import { useGetCourseQuery } from '../../serviceQuery/courses'
 import { setCurrentCourse, setCurrentPage } from '../../store/slices/courses'
 import { useNavigate  } from "react-router-dom";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-// import { db, app } from '../../firebase'
-import { getDatabase, ref, set, onValue, once, get, child } from "firebase/database";
-import firebase from '../../firebase';
+import { ref, set, get, child,  } from "firebase/database";
 
 
 export const CoursePage = ({theme, isShowButton}) => {
@@ -23,38 +21,38 @@ export const CoursePage = ({theme, isShowButton}) => {
     const { id } = useParams()
     const { data, isLoading } = useGetCourseQuery(id)   
     const course = useSelector(currentCourseSelector)
-    const [uid, setUid] = useState('') 
+    const [isUid, setUid] = useState() 
 
-    const handleLoginClick = async ({userAuth}) => {
+    useEffect(() => {
         onAuthStateChanged(getAuth(), (user) => {
             if (user) {
-              const uid = user.uid; 
-              setUid(uid);
+              const userId = user.uid; 
+              setUid(userId);
             }
         });
+    }, [setUid])
 
+
+    const handleLoginClick = ({userAuth}) => {
         if (!!userAuth) { 
             // получить список курсов пользователя 
             const dbRef = firebase.database().ref()
             const db = firebase.database()
-            await get(child(dbRef, 'users/' + uid ))
+            get(child(dbRef, 'users/' + isUid ))
             .then((snapshot) => {
                 const dataRef = snapshot.val(); 
-                // добавить пользователя если его нет в дб
-                if (dataRef === null) {
-                    set(ref(db, `users/${uid}`), {
-                        uid: uid,
+                if (dataRef === null ) {
+                    set(ref(db, `users/${isUid}`), {
+                        uid: isUid,
                         courses: [{id: id, img: course.nameEN, title: course.nameRU}]
                     })
                 } else {
                     // проверка на подписанный курс
-                    // console.log(dataRef.courses)
                     if (dataRef?.courses?.find((item) => item.id === id)) {
                         return
                     } else {
-                        dataRef?.courses?.push({id: id, img: course.nameEN, title: course.nameRU});
-                        set(ref(db, `users/${uid}`), {
-                            uid: uid,
+                        set(ref(db, `users/${isUid}`), {
+                            uid: isUid,
                             courses: dataRef.courses,
                         })
                     }
@@ -63,7 +61,6 @@ export const CoursePage = ({theme, isShowButton}) => {
             .catch((e) => {
                 console.error(e);
             });
-
             setShow(!show)
         }
         else {
