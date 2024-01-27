@@ -1,6 +1,6 @@
+import * as S from './course-page.style';
 import { BaseButton } from "../../components/button/button";
 import { MainLayout } from "../../layouts/main-layout/main-layout";
-import * as S from './course-page.style';
 import { ProgressBlock } from '../../components/progress-block/progress-block'
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
@@ -9,25 +9,64 @@ import { currentCourseSelector } from '../../store/selectors/courses'
 import { useGetCourseQuery } from '../../serviceQuery/courses'
 import { setCurrentCourse, setCurrentPage } from '../../store/slices/courses'
 import { useNavigate  } from "react-router-dom";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { ref, set, get, child,  } from "firebase/database";
+
 
 export const CoursePage = ({theme, isShowButton}) => {
     const [show, setShow] = useState(false)
-    const auth = localStorage.getItem('auth')
+    const userAuth = localStorage.getItem('auth')
     const navigate = useNavigate();
-    const handleLoginClick = ({auth}) => {
-        if (!!auth) {
+    const dispatch = useDispatch()
+    const { id } = useParams()
+    const { data, isLoading } = useGetCourseQuery(id)   
+    const course = useSelector(currentCourseSelector)
+    const [isUid, setUid] = useState() 
+
+    useEffect(() => {
+        onAuthStateChanged(getAuth(), (user) => {
+            if (user) {
+              const userId = user.uid; 
+              setUid(userId);
+            }
+        });
+    }, [setUid])
+
+
+    const handleLoginClick = ({userAuth}) => {
+        if (!!userAuth) { 
+            // получить список курсов пользователя 
+            const dbRef = firebase.database().ref()
+            const db = firebase.database()
+            get(child(dbRef, 'users/' + isUid ))
+            .then((snapshot) => {
+                const dataRef = snapshot.val(); 
+                if (dataRef === null ) {
+                    set(ref(db, `users/${isUid}`), {
+                        uid: isUid,
+                        courses: [{id: id, img: course.nameEN, title: course.nameRU}]
+                    })
+                } else {
+                    // проверка на подписанный курс
+                    if (dataRef?.courses?.find((item) => item.id === id)) {
+                        return
+                    } else {
+                        set(ref(db, `users/${isUid}`), {
+                            uid: isUid,
+                            courses: dataRef.courses,
+                        })
+                    }
+                }
+            })
+            .catch((e) => {
+                console.error(e);
+            });
             setShow(!show)
-            localStorage.setItem('userCourses', id)
         }
         else {
             navigate('/auth', { replace: true });
         }
     }
-
-    const dispatch = useDispatch()
-    const { id } = useParams()
-    const { data, isLoading } = useGetCourseQuery(id)   
-    const course = useSelector(currentCourseSelector)
 
     useEffect(() => {
         if (data) {
@@ -82,7 +121,7 @@ export const CoursePage = ({theme, isShowButton}) => {
                         Оставьте заявку на пробное занятие, мы свяжемся 
                         с вами, поможем с выбором направления и тренера, с которым тренировки принесут здоровье и радость!
                     </S.SubmitApplicationText>
-                    <BaseButton action={() => handleLoginClick({auth})} theme='dark' text='Записаться на тренировку' />
+                    <BaseButton action={() => handleLoginClick({userAuth})} theme='dark' text='Записаться на тренировку' />
                     <S.SubmitApplicationImg src="/img/phone.svg" alt="phone" />
                 </S.SubmitApplication>
                 {show && <ProgressBlock text = 'Вы успешно записались!' setShow={setShow}/>} 

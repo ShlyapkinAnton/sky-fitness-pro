@@ -8,7 +8,7 @@ import { useDispatch } from 'react-redux';
 
 export const WorkoutPage = ({theme}) => {
     const dispatch = useDispatch();
-    const [error, setError] = useState()
+    const [error, setError] = useState(null)
     const { courseId, id } = useParams();
     const { data, isLoading } = useGetWorkoutQuery(id);
     const courses = useGetCoursesQuery();
@@ -29,25 +29,38 @@ export const WorkoutPage = ({theme}) => {
         setIsInputResultActive(false)
     }
     
-    const countResultGuantity = (quantity, index) => {
-        userInputData[index] = Math.abs(quantity);  
+    const countResultQuantity = (quantity, index) => {
+        if (Number.isInteger(quantity / 1)){
+            userInputData[index] = Math.abs(quantity);  
+            setError(null)
+            console.log('userInputData', userInputData);
+        } else {
+            setError('Введите целое число');
+        }
     }
     
     // Функция расчета результатов
     const countResultExersise = () => {
         let newResult = [];
-        if (userInputData?.length === numExercises?.length) {
-            for (let i = 0; i < userInputData?.length; i++) {
-                newResult.push((userInputData[i] / data.exercises[i].quantity) * 100);
+       
+        console.log(userInputData.length);
+        console.log(data.exercises.length);
+        if (userInputData.length === data.exercises.length) {
+            for (let i = 0; i < userInputData.length; i++) {
+                let res =  (userInputData[i] / data.exercises[i].quantity) * 100;
+                    if (res > 100) {
+                        res = 100;
+                    }
+                newResult.push(res);
+                        
             } 
-            setError(null)
             setProgressDone()
-        } else {
-            setError('Заполните поля ввода')
+            setResult(newResult);
+        } else{
+            setError('Заполните поля ввода'); 
         }
-        setResult(newResult);
+        console.log(result)
     }
-
 
     const getExerciseName = (exercise) => {
         const [ name ] = exercise.split('(');
@@ -109,7 +122,7 @@ export const WorkoutPage = ({theme}) => {
                                         return (
                                             <S.ResultInputBox key={index}>
                                                 <S.ResultInputText >{exercise.name}</S.ResultInputText>
-                                                <S.ResultInput type="number" step="1" min="0" placeholder='Введите значение' value={quantity} onInput={(event)=>{countResultGuantity(event.target.value, index)}}>
+                                                <S.ResultInput type="number" step="1" min="0" placeholder='Введите значение' value={quantity} onInput={(event)=>{countResultQuantity(event.target.value, index)}}>
                                                 </S.ResultInput>
                                             </S.ResultInputBox>        
                                         )

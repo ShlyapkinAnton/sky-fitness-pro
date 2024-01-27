@@ -1,56 +1,60 @@
 import * as S from './updata-user-data.styles.js';
 import { useState } from 'react';
 import { Logo } from "../logo/logo.jsx";
+import { useNavigate } from 'react-router-dom'
+import { Validate } from '../../components/validates/validate.js'
+import { getAuth, updateEmail, updatePassword } from "firebase/auth";
 
 export const UpdateUserData = ({isLoginMode, setIsActive}) => {
   const [error, setError] = useState(null);
-  const [login, setLogin] = useState('');
+  const [email, setEmail] = useState('')
   const [password, setPassword] = useState('');
   const [repeatPassword, setRepeatPassword] = useState('');
   const [buttonActive, setButtonActive] = useState(false);
+  const navigate = useNavigate()
+  const auth = getAuth();
+  const user = auth.currentUser;
 
-  const handleLogin = async ({ login }) => {
-    if (!login) {
-      setError('Заполните поле ввода')
-      return
-    }
+  const handleLogin = async ({ email }) => {
+    // verifyBeforeUpdateEmail
+    Validate({email, setError})
+
     try {
-      const response = await getSignIn({ login })
-      setUser(response)
-      localStorage.setItem('user', JSON.stringify(response))
-      responseToken()
-      setButtonActive(true)
-      navigate('/', { replace: true })
+      await updateEmail(user, email).then(() => { })
+      navigate('/auth', { replace: true })
       setError(null)
+      setButtonActive(true)
     } catch (error) {
       console.error('Ошибка авторизации:', error.message)
-      setError(error.message)
+      if (error.message === 'Firebase: Error (auth/invalid-credential).') {
+        setError('Ошибка авторизации: Недопустимые учетные данные')
+      } else if (error.message === 'Firebase: Error (auth/invalid-email).') {
+        setError('Ошибка авторизации: Неверный адрес электронной почты')
+      } else {
+        setError(`Ошибка авторизации: ${error.message}`)
+      }
     } finally {
       setButtonActive(false)
     }
   }
   
-  const handleRegister = async () => {
-    if ( !password || !repeatPassword ) {
-      setError('Заполните поле ввода')
-      return
-    }
-    if (password !== repeatPassword) {
-      setError('Пароли не совпадают')
-      return
-    }
+  const handlePassword = async ({ password, repeatPassword }) => {
+    // reauthenticateWithCredential 
+    Validate({ password, repeatPassword, setError});
     try {
-      const response = await getSignUp({ password })
-      setUser(response)
-      localStorage.setItem('user', JSON.stringify(response))
-      responseToken()
-      setButtonActive(true)
-      navigate('/', { replace: true })
+      await updatePassword(user, password).then(() => { })
+      navigate('/auth', { replace: true })
       setError(null)
-      // setIsLoginMode(true)
+      setButtonActive(true)
     } catch (error) {
       console.error('Ошибка авторизации:', error.message)
-      setError(error.message)
+      if (error.message === 'Firebase: Error (auth/invalid-credential).') {
+        setError('Ошибка авторизации: Недопустимые учетные данные')
+      } else if (error.message === 'Firebase: Error (auth/invalid-email).') {
+        setError('Ошибка авторизации: Неверный адрес электронной почты')
+      } else {
+        setError(`Ошибка авторизации: ${error.message}`)
+      }
     } finally {
       setButtonActive(false)
     }
@@ -68,22 +72,22 @@ export const UpdateUserData = ({isLoginMode, setIsActive}) => {
             <S.Inputs>
               <S.InputTitle>Новый логин:</S.InputTitle>
                 <S.ModalInput
-                    type="text"
-                    name="login"
-                    placeholder="Логин"
-                    value={login}
-                    onChange={(event) => {
-                    setLogin(event.target.value)
-                    }}
+                  type="text"
+                  name="login"
+                  placeholder="Логин"
+                  value={email}
+                  onChange={(event) => {
+                  setEmail(event.target.value)
+                  }}
                 />
             </S.Inputs>
             {error && <S.Error>{error}</S.Error>}
             <S.Buttons>
               <S.PrimaryButton
-                  disabled={buttonActive}
-                  onClick={() => handleLogin({ login })}
+                disabled={buttonActive}
+                onClick={() => handleLogin({ email })}
               >
-                  {buttonActive ? 'Сохрание...' : 'Сохранить'}
+                {buttonActive ? 'Сохрание...' : 'Сохранить'}
               </S.PrimaryButton>
             </S.Buttons>
           </>
@@ -92,30 +96,30 @@ export const UpdateUserData = ({isLoginMode, setIsActive}) => {
               <S.Inputs>
                 <S.InputTitle>Новый пароль:</S.InputTitle>
                 <S.ModalInput
-                    type="new-password"
-                    name="password"
-                    placeholder="Пароль"
-                    value={password}
-                    onChange={(event) => {
-                    setPassword(event.target.value)
-                    }}
+                  type="new-password"
+                  name="password"
+                  placeholder="Пароль"
+                  value={password}
+                  onChange={(event) => {
+                  setPassword(event.target.value)
+                  }}
                 />
                 <S.ModalInput
-                    type="new-password"
-                    name="password"
-                    placeholder="Повторите пароль"
-                    value={repeatPassword}
-                    onChange={(event) => {
-                    setRepeatPassword(event.target.value)
-                    }}
+                  type="new-password"
+                  name="password"
+                  placeholder="Повторите пароль"
+                  value={repeatPassword}
+                  onChange={(event) => {
+                  setRepeatPassword(event.target.value)
+                  }}
                 />
               </S.Inputs>
               {error && <S.Error>{error}</S.Error>}
               <S.Buttons>
-                <S.PrimaryButton disabled={buttonActive} onClick={handleRegister}>
-                    {buttonActive
-                    ? 'Сохрание...'
-                    : 'Сохранить'}
+                <S.PrimaryButton disabled={buttonActive} onClick={() => handlePassword({ password, repeatPassword })}>
+                  {buttonActive
+                  ? 'Сохрание...'
+                  : 'Сохранить'}
                 </S.PrimaryButton>
               </S.Buttons>
             </>

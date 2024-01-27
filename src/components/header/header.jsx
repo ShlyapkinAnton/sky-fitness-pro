@@ -8,7 +8,7 @@ import { currentPageSelector } from '../../store/selectors/courses'
 export const Header = ({theme, isShowButton = true}) => {
     const [showMore, setShowMore] = useState(false)
     const handleMoreClick = () => {setShowMore(!showMore)}
-    const user = useSelector((state) => state.auth);
+    const user = JSON.parse(localStorage.getItem('auth')) ?? null;
     const page = useSelector(currentPageSelector);
 
     return (
@@ -16,11 +16,11 @@ export const Header = ({theme, isShowButton = true}) => {
             <S.HeaderContainer>
                 <Logo theme={theme}/>
                 {isShowButton && (
-                    <>{!user.userName ? <S.HeaderButton to='/auth'>Войти</S.HeaderButton> : 
+                    <>{!user?.userName ? <S.HeaderButton to='/auth'>Войти</S.HeaderButton> : 
                     <S.ProfileBlock onClick={() => handleMoreClick()}>
                         <S.ProfileIcon ></S.ProfileIcon >
                         <S.ProfileMail page={page}>
-                            {user.userName}
+                            {user?.userName}
                             {showMore && <NavMenu page={page}/> }
                         </S.ProfileMail>
                         <S.ProfileSvg>

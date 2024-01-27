@@ -1,13 +1,12 @@
 import { useState, useEffect } from 'react';
 import * as S from './profile-page.styles';
 import { UpdateUserData } from '../../components/updata-user-data/updata-user-data';
-import { userFitnessCards } from '../../mock/courses-data'
+import { Card } from '../../components/null-card/null-card';
 import { MainLayout } from '../../layouts/main-layout/main-layout';
-import { useGetWorkoutsQuery, useGetCoursesQuery } from '../../serviceQuery/courses';
+import { useGetWorkoutsQuery, useGetCoursesQuery, useGetCoursesUserQuery } from '../../serviceQuery/courses';
 import { WorkoutsModal } from '../../components/workouts-modal/workouts-modal';
-import { useSelector, useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { setAllWorkouts, setCurrentPage } from '../../store/slices/courses'
-import { currentCourseSelector } from '../../store/selectors/courses'
 
 export const ProfilePage = () => {
     const dispatch = useDispatch();
@@ -26,10 +25,18 @@ export const ProfilePage = () => {
     }, [data, isError, isLoading])
 
     const [isShowWorkouts, setShowWorkouts] = useState(false)
-    const user = useSelector((state) => state.auth);
+    const user = JSON.parse(localStorage.getItem('auth')) ?? null;
     const courses = useGetCoursesQuery();
     const [workoutsData, setWorkoutsData] = useState([])
     const [courseId, setCourseId] = useState(null)
+
+    const [courseUser, setCourseUser] = useState()
+    const uid = JSON.parse(localStorage.getItem('auth')).userID
+    const arrCourseUser = useGetCoursesUserQuery(uid).currentData;
+    useEffect(() => {
+        setCourseUser(arrCourseUser)
+    },[arrCourseUser, courseUser]);
+
 
     const [isActive, setIsActive] = useState(false);
     useEffect(() => {
@@ -49,24 +56,12 @@ export const ProfilePage = () => {
         setShowWorkouts(true);
     }
 
-    // // получить курс из LS и отобразить его вместо userFitnessCards
-    // const courseUserId = localStorage.getItem('userCourses');
-    // useEffect(() => {
-    //     // console.log('workoutsData', workoutsData);
-    //     if (courseUserId) {
-    //         const arr = courses.data[courseUserId].workouts.map(id => data[id])
-    //         console.log( arr);
-    //     }
-    // },[data, courseUserId])
-    // //
-
     return (
             <MainLayout theme='white' isLoading={isLoading}>
                 <S.MainInfo>
                     <S.MainTitle>Мой профиль</S.MainTitle>
                     <S.MainTextBlock>
                         <S.MainText>Логин: {user.userName}</S.MainText>
-                        <S.MainText>Пароль: 12345678</S.MainText>
                     </S.MainTextBlock>
                     <S.MainButtonBlock>
                         <S.MainButton type="button" className="button" onClick={() => handleLoginClick()} >Изменить логин</S.MainButton>
@@ -74,7 +69,7 @@ export const ProfilePage = () => {
                     </S.MainButtonBlock>
                 </S.MainInfo> 
                 <S.MainCards>
-                    {userFitnessCards.map(({title, img, id}) => {
+                    {courseUser ? courseUser.map(({id, img, title}) => {
                         return (
                             <S.FitnessCard key={title} onClick={() => handleShowWorkoutsModal(id)}>
                                 <S.FitnessCardTitle>
@@ -84,7 +79,8 @@ export const ProfilePage = () => {
                                 <S.FitnessCardButton type="button">Перейти</S.FitnessCardButton>
                             </S.FitnessCard>
                         )
-                    })}
+                    }) : (<Card/>)
+                    }
                 </S.MainCards>
                 {isActive && <UpdateUserData isLoginMode={isLoginMode} setIsActive={setIsActive}/> }
                 {isShowWorkouts && <WorkoutsModal action={handleShowWorkoutsModal} data={workoutsData} courseId={courseId} />}

@@ -7,13 +7,11 @@ import { AuthPage } from "./pages/auth-page/auth-page.jsx";
 import { WorkoutPage } from "./pages/workout-page/workout-page.jsx";
 import { ProtectedRoute } from './components/protected-route/protectedRoute'
 
-export const AppRoutes = ({ userData }) => {
-    const user = userData?.userName;
-    
+export const AppRoutes = ({ user, setUser }) => {
     return (
         <Routes>
             <Route  path="/" element={<MainPage theme='dark'/>} /> 
-            <Route  path="/auth" element={<AuthPage theme='dark'/>} />
+            <Route  path="/auth" element={<AuthPage theme='dark' setUser={setUser}/>} />
             <Route  path="/course/:id" element={<CoursePage theme='light'/>}/>
             
             <Route element={<ProtectedRoute isAllowed={Boolean(user)} />}>

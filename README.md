@@ -13,10 +13,11 @@
 
 ## Технологии
 
-* React
-* Redux
 * HTML
 * Styled components
+* Firebase
+* React
+* Redux
 
 ## Разработчик
 

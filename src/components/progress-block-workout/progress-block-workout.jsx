@@ -5,7 +5,6 @@ export const ProgressBlock = ({ workout, setShow, userProgress, setUserProgress}
     const [buttonActive, setButtonActive] = useState(false);
 
     const handleActiveClick = () => {
-        console.log('click-active', userProgress);
         setShow(false);
     }
 
