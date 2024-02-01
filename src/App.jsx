@@ -2,7 +2,6 @@ import { useState } from 'react'
 import { AppRoutes } from "./routes";
 import { Provider } from 'react-redux';
 import { store } from './store/store';
-import database from './firebase'
 
 const App = () => {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('auth')) ?? null);
