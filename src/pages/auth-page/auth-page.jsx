@@ -6,7 +6,6 @@ import { MainLayout } from '../../layouts/main-layout/main-layout';
 import { Logo } from '../../components/logo/logo'
 import { Validate } from '../../components/validates/validate.js'
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword, getAuth } from 'firebase/auth';
-// import { auth } from '../../firebase.js'
 import { setAuth } from '../../store/slices/auth'
 
 export const AuthPage = ({theme, setUser}) => {
