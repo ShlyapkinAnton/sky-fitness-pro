@@ -10,8 +10,7 @@ import { useGetCourseQuery } from '../../serviceQuery/courses'
 import { setCurrentCourse, setCurrentPage } from '../../store/slices/courses'
 import { useNavigate  } from "react-router-dom";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { ref, set, get, child,  } from "firebase/database";
-
+import { ref, set, get, child } from "firebase/database";
 
 export const CoursePage = ({theme, isShowButton}) => {
     const [show, setShow] = useState(false)

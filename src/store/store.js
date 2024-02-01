@@ -10,7 +10,5 @@ export const store = configureStore({
         [coursesQuery.reducerPath]: coursesQuery.reducer,
     },
   
-    middleware: (getDefaultMiddleware) =>
-      getDefaultMiddleware()
-        .concat(coursesQuery.middleware)
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(coursesQuery.middleware)
   })
