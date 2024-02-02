@@ -7,7 +7,7 @@ import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { currentCourseSelector } from '../../store/selectors/courses'
 import { useGetCourseQuery } from '../../serviceQuery/courses'
-import { setCurrentCourse, setCurrentPage } from '../../store/slices/courses'
+import { setCurrentCourse, setCurrentPage, setUserCourses } from '../../store/slices/courses'
 import { useNavigate  } from "react-router-dom";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { ref, set, get, child } from "firebase/database";
@@ -51,8 +51,11 @@ export const CoursePage = ({theme, isShowButton}) => {
                 } else {
                     // проверка на подписанный курс
                     if (dataRef?.courses?.find((item) => item.id === id)) {
+                        console.log('id === id', dataRef.courses)
                         return
                     } else {
+                        const newData = dataRef.courses.push({id: id, img: course.nameEN, title: course.nameRU})
+                        dispatch(setUserCourses(dataRef.courses))
                         set(ref(db, `users/${isUid}`), {
                             uid: isUid,
                             courses: dataRef.courses,

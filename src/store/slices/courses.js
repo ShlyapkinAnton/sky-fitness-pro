@@ -6,6 +6,7 @@ const initialState = {
     allWorkouts: {},
     currentWorkout: [],
     currentPage: '',
+    userCourses: [],
 }
 
 const coursesSlice = createSlice({
@@ -27,6 +28,9 @@ const coursesSlice = createSlice({
         setCurrentPage: (state, action) => {
             state.currentPage = action.payload
         },
+        setUserCourses: (state, action) => {
+            state.userCourses = action.payload
+        },
     },
 })
 
@@ -35,7 +39,8 @@ export const {
     setCurrentCourse,
     setAllWorkouts,
     setCurrentWorkout,
-    setCurrentPage
+    setCurrentPage,
+    setUserCourses,
 } = coursesSlice.actions
 
 export default coursesSlice.reducer

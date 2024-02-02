@@ -5,8 +5,9 @@ import { Card } from '../../components/null-card/null-card';
 import { MainLayout } from '../../layouts/main-layout/main-layout';
 import { useGetWorkoutsQuery, useGetCoursesQuery, useGetCoursesUserQuery } from '../../serviceQuery/courses';
 import { WorkoutsModal } from '../../components/workouts-modal/workouts-modal';
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { setAllWorkouts, setCurrentPage } from '../../store/slices/courses'
+import { userCoursesSelector } from '../../store/selectors/courses'
 
 export const ProfilePage = () => {
     const dispatch = useDispatch();
@@ -16,7 +17,18 @@ export const ProfilePage = () => {
     const [passwordShow, setPasswordShow] = useState(false)
     const handlePasswordClick = () => {setPasswordShow(!passwordShow); setIsLoginMode(false);}
 
-    const {data, isError, isLoading} = useGetWorkoutsQuery(); 
+    const {data, isError, isLoading} = useGetWorkoutsQuery();
+    const [isShowWorkouts, setShowWorkouts] = useState(false)
+    const user = JSON.parse(localStorage.getItem('auth')) ?? null;
+    const courses = useGetCoursesQuery();
+    const [workoutsData, setWorkoutsData] = useState([])
+    const [courseId, setCourseId] = useState(null)
+    const [courseUser, setCourseUser] = useState()
+    const userCourses = useSelector(userCoursesSelector)
+    const uid = JSON.parse(localStorage.getItem('auth')).userID
+    const arrCourseUser = useGetCoursesUserQuery(uid).currentData;
+    const [isActive, setIsActive] = useState(false);
+
     useEffect(() => {
         if (data) {
             dispatch(setAllWorkouts(data));
@@ -24,21 +36,12 @@ export const ProfilePage = () => {
         }
     }, [data, isError, isLoading])
 
-    const [isShowWorkouts, setShowWorkouts] = useState(false)
-    const user = JSON.parse(localStorage.getItem('auth')) ?? null;
-    const courses = useGetCoursesQuery();
-    const [workoutsData, setWorkoutsData] = useState([])
-    const [courseId, setCourseId] = useState(null)
-
-    const [courseUser, setCourseUser] = useState()
-    const uid = JSON.parse(localStorage.getItem('auth')).userID
-    const arrCourseUser = useGetCoursesUserQuery(uid).currentData;
     useEffect(() => {
-        setCourseUser(arrCourseUser)
-    },[arrCourseUser, courseUser]);
+        const course = arrCourseUser ?? userCourses;
+        setCourseUser(course)
+    },[arrCourseUser, courseUser, user, uid, data]);
 
 
-    const [isActive, setIsActive] = useState(false);
     useEffect(() => {
         if (loginShow || passwordShow) {
             setIsActive(true);
