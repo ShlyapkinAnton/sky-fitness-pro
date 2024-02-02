@@ -11,6 +11,7 @@ import { setCurrentCourse, setCurrentPage } from '../../store/slices/courses'
 import { useNavigate  } from "react-router-dom";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { ref, set, get, child } from "firebase/database";
+import { app, auth, db } from '../../firebase'
 
 export const CoursePage = ({theme, isShowButton}) => {
     const [show, setShow] = useState(false)
@@ -23,7 +24,7 @@ export const CoursePage = ({theme, isShowButton}) => {
     const [isUid, setUid] = useState() 
 
     useEffect(() => {
-        onAuthStateChanged(getAuth(), (user) => {
+        onAuthStateChanged(auth, (user) => {
             if (user) {
               const userId = user.uid; 
               setUid(userId);
@@ -35,8 +36,10 @@ export const CoursePage = ({theme, isShowButton}) => {
     const handleLoginClick = ({userAuth}) => {
         if (!!userAuth) { 
             // получить список курсов пользователя 
-            const dbRef = firebase.database().ref()
-            const db = firebase.database()
+            // const dbRef = firebase.database().ref()
+            // const db = firebase.database()
+            const dbRef = app.database().ref()
+            // const db = firebase.database()
             get(child(dbRef, 'users/' + isUid ))
             .then((snapshot) => {
                 const dataRef = snapshot.val(); 
