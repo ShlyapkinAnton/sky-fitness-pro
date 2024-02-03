@@ -7,6 +7,7 @@ import { Logo } from '../../components/logo/logo'
 import { Validate } from '../../components/validates/validate.js'
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword, getAuth } from 'firebase/auth';
 import { setAuth } from '../../store/slices/auth'
+import { app } from '../../firebase-api'
 
 export const AuthPage = ({theme, setUser}) => {
   const [isLoginMode, setIsLoginMode] = useState(true)
@@ -17,13 +18,14 @@ export const AuthPage = ({theme, setUser}) => {
   const [repeatPassword, setRepeatPassword] = useState('')
   const navigate = useNavigate()
   const [buttonActive, setButtonActive] = useState(false)
+  const auth = getAuth(app);
 
   const handleLogin = async ({ email, password }) => {
 
     Validate({email, password, setError})
 
     try {
-      const response = await signInWithEmailAndPassword(getAuth(), email, password)
+      await signInWithEmailAndPassword(auth, email, password)
       .then(({ user }) => {
         dispatch(
           setAuth({
@@ -53,11 +55,10 @@ export const AuthPage = ({theme, setUser}) => {
   }
 
   const handleRegister = async ({ email, password, repeatPassword }) => {
-
+    console.log(email, password, repeatPassword)
     Validate({email, password, repeatPassword, setError});
-
     try {
-      const response = await createUserWithEmailAndPassword(getAuth(), email, password)
+      await createUserWithEmailAndPassword(auth, email, password)
       .then(({ user }) => {
         dispatch(
             setAuth({
@@ -134,37 +135,37 @@ export const AuthPage = ({theme, setUser}) => {
             </>
             ) : (
             <>
-                <S.Inputs>
-                  <S.ModalInput
-                    type="email"
-                    name="login"
-                    placeholder="Логин"
-                    value={email}
-                    onChange={(event) => {setEmail(event.target.value)}}
-                  />
-                  <S.ModalInput
-                    type="new-password"
-                    name="password"
-                    placeholder="Пароль"
-                    value={password}
-                    onChange={(event) => {setPassword(event.target.value)}}
-                  />
-                  <S.ModalInput
-                    type="new-password"
-                    name="password"
-                    placeholder="Повторите пароль"
-                    value={repeatPassword}
-                    onChange={(event) => {setRepeatPassword(event.target.value)}}
-                  />
-                </S.Inputs>
-                {error && <S.Error>{error}</S.Error>}
-                <S.Buttons>
-                  <S.PrimaryButton disabled={buttonActive} onClick={handleRegister}>
-                      {buttonActive
-                      ? 'Выполняется регистрация...'
-                      : 'Зарегистрироваться'}
-                  </S.PrimaryButton>
-                </S.Buttons>
+              <S.Inputs>
+                <S.ModalInput
+                  type="email"
+                  name="login"
+                  placeholder="Логин"
+                  value={email}
+                  onChange={(event) => {setEmail(event.target.value)}}
+                />
+                <S.ModalInput
+                  type="new-password"
+                  name="password"
+                  placeholder="Пароль"
+                  value={password}
+                  onChange={(event) => {setPassword(event.target.value)}}
+                />
+                <S.ModalInput
+                  type="new-password"
+                  name="password"
+                  placeholder="Повторите пароль"
+                  value={repeatPassword}
+                  onChange={(event) => {setRepeatPassword(event.target.value)}}
+                />
+              </S.Inputs>
+              {error && <S.Error>{error}</S.Error>}
+              <S.Buttons>
+                <S.PrimaryButton disabled={buttonActive} onClick={() => handleRegister({ email, password, repeatPassword })}>
+                    {buttonActive
+                    ? 'Выполняется регистрация...'
+                    : 'Зарегистрироваться'}
+                </S.PrimaryButton>
+              </S.Buttons>
             </>
             )}
         </S.ModalForm>   
