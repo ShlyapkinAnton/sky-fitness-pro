@@ -11,7 +11,7 @@ import { setCurrentCourse, setCurrentPage, setUserCourses } from '../../store/sl
 import { useNavigate  } from "react-router-dom";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { ref, set, get, child } from "firebase/database";
-import { app, auth, db } from '../../firebase'
+import { app, auth, db } from '../../firebase-api'
 
 export const CoursePage = ({theme, isShowButton}) => {
     const [show, setShow] = useState(false)
