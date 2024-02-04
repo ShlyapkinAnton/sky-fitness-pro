@@ -55,7 +55,6 @@ export const AuthPage = ({theme, setUser}) => {
   }
 
   const handleRegister = async ({ email, password, repeatPassword }) => {
-    console.log(email, password, repeatPassword)
     Validate({email, password, repeatPassword, setError});
     try {
       await createUserWithEmailAndPassword(auth, email, password)

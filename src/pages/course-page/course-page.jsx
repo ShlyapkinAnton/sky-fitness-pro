@@ -7,9 +7,9 @@ import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { currentCourseSelector } from '../../store/selectors/courses'
 import { useGetCourseQuery } from '../../serviceQuery/courses'
-import { setCurrentCourse, setCurrentPage, setUserCourses } from '../../store/slices/courses'
+import { setCurrentCourse, setCurrentPage } from '../../store/slices/courses'
 import { useNavigate  } from "react-router-dom";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { onAuthStateChanged } from "firebase/auth";
 import { ref, set, get, child } from "firebase/database";
 import { app, auth, db } from '../../firebase-api'
 
@@ -36,26 +36,22 @@ export const CoursePage = ({theme, isShowButton}) => {
     const handleLoginClick = ({userAuth}) => {
         if (!!userAuth) { 
             // получить список курсов пользователя 
-            // const dbRef = firebase.database().ref()
-            // const db = firebase.database()
             const dbRef = app.database().ref()
-            // const db = firebase.database()
             get(child(dbRef, 'users/' + isUid ))
-            .then((snapshot) => {
+            .then( async (snapshot) => {
                 const dataRef = snapshot.val(); 
                 if (dataRef === null ) {
-                    set(ref(db, `users/${isUid}`), {
+                    await set(ref(db, `users/${isUid}`), {
                         uid: isUid,
                         courses: [{id: id, img: course.nameEN, title: course.nameRU}]
                     })
                 } else {
                     // проверка на подписанный курс
                     if (dataRef?.courses?.find((item) => item.id === id)) {
-                        console.log('id === id', dataRef.courses)
                         return
                     } else {
-                        const newData = dataRef.courses.push({id: id, img: course.nameEN, title: course.nameRU})
-                        dispatch(setUserCourses(dataRef.courses))
+                        // const newData = dataRef.courses.push({id: id, img: course.nameEN, title: course.nameRU})
+                        // dispatch(setUserCourses(dataRef.courses))
                         set(ref(db, `users/${isUid}`), {
                             uid: isUid,
                             courses: dataRef.courses,
