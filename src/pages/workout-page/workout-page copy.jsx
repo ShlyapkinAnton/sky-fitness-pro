@@ -16,7 +16,7 @@ export const WorkoutPage = ({theme}) => {
     const [isProgressDone, setIsProgressDone] = useState(false);
     const [result, setResult] = useState([0,0,0,0,0])
     const [numExercises, setNumExercises] = useState();
-    // const [userEnter, setUserEnter] = useState([]);
+    const [userEnter, setUserEnter] = useState([]);
 
     let quantity;
     let userInputData = [];
@@ -32,116 +32,55 @@ export const WorkoutPage = ({theme}) => {
     
     const countResultQuantity = (quantity, index) => {
         if (Number.isInteger(quantity / 1)){
-            // userInputData[index] = Math.abs(quantity);  
-            // setUserEnter(userInputData);
-            setError(null);
             userInputData[index] = Math.abs(quantity);  
+            setUserEnter(userInputData);
+            setError(null)
             console.log('userInputData', userInputData);
-        } 
-        else {
+        } else {
             setError('Введите целое число');
-        }
-        // console.log(error);
-        // console.log(userInputData.length);
-        // for (let i = 0; i < userInputData.length; i++) {
-        //     console.log(Number.isInteger(userInputData[i] / 1));
-        //     if (Number.isInteger(userInputData[i] / 1)){
-        //         // setError(null);
-        //         // userInputData[i] = Math.abs(quantity);
-        //     }  else{
-        //         // userInputData[index] = Math.abs(quantity);
-        //         setError('Введите целое число пожалуйста');
-                
-        //     }
-        // }
         
-
-        console.log(userInputData);
+        }
     }
     
     // Функция расчета результатов
     const countResultExersise = () => {
-    
-        for (let i = 0; i < userInputData.length; i++) {
-            console.log(Number.isInteger(userInputData[i] / 1));
-            if (Number.isInteger(userInputData[i] / 1)){
-                setError(null);
-                // userInputData[i] = Math.abs(quantity);
-            }  else{
-                // userInputData[index] = Math.abs(quantity);
-                setError('Введите целое число пожалуйста');
-                
-            }
-        }
-       
-       
-       
-       
-        for (let i = 0; i < userInputData.length; i++) {
-            if (userInputData[i] === null){
-                setError('Заполнены не все поля формы');
-            }else{
-                setError(null);
-            }
-                
-        }
-
-        let userEnter = [];
-    
-    
-
-    //     for (let i = 0; i < userInputData.length; i++) {
-    //       userEnter[i] = userInputData[i];
-    //   }
-  
         let newResult = [];
-         
-          console.log(userInputData.length);
-          console.log(data.exercises.length);
-          console.log(userInputData);
-          
-          if(!userInputData.length){
-              setError('Заполните поля ввода 3');
-              return;
-          }else{
-  
-  // if (userInputData.length === data.exercises.length) {
-      for (let i = 0; i < userInputData.length; i++) {
-          console.log(userInputData[i]);
-          // if((userEnter[i] === 0) || userEnter[i]== null)    {
-          //     setError('Заполните поля ввода 2');
-          //     return;
-          // }else{
-  
-          if(userInputData[i]== null){
-            userInputData[i] = 0;
-          }
-  
-              let res =  (userInputData[i] / data.exercises[i].quantity) * 100;
-              if (res > 100) {
-                  res = 100;
-              }
-          newResult.push(res);
-          console.log(res);
-              
-          // }
-                  
-      } 
-      setProgressDone()
-      setResult(newResult);
-  // } else{
-  //     setError('Заполните поля ввода'); 
-  // }
-  console.log(result)
-  
-  
-          }
-    
-    
-    
-    
-    
        
+        console.log(userInputData.length);
+        console.log(data.exercises.length);
+        console.log(userInputData);
+        if(!userInputData.length){
+            setError('Заполните поля ввода 3');
+            return;
+        }else{
+
+// if (userInputData.length === data.exercises.length) {
+    for (let i = 0; i < userInputData.length; i++) {
+        console.log(userInputData[i]);
+        if((userInputData[i] === 0) || userInputData[i]== null)    {
+            setError('Заполните поля ввода 2');
+            return;
+        }else{
+
+            let res =  (userInputData[i] / data.exercises[i].quantity) * 100;
+            if (res > 100) {
+                res = 100;
+            }
+        newResult.push(res);
+        console.log(res);
+            
+        }
+                
+    } 
+    setProgressDone()
+    setResult(newResult);
+// } else{
+//     setError('Заполните поля ввода'); 
+// }
+console.log(result)
+
+
+        }
         
     }
 
@@ -205,11 +144,10 @@ export const WorkoutPage = ({theme}) => {
                                         return (
                                             <S.ResultInputBox key={index}>
                                                 <S.ResultInputText >{exercise.name}</S.ResultInputText>
-                                                <S.ResultInput type="number" step="1" min="0" placeholder='Введите значение' value={quantity} onChange={(event)=>{countResultQuantity(event.target.value, index)}}>
+                                                <S.ResultInput type="number" step="1" min="0" placeholder='Введите значение' value={quantity} onInput={(event)=>{countResultQuantity(event.target.value, index)}}>
                                                 </S.ResultInput>
                                             </S.ResultInputBox>        
                                         )
-                                    
                                     })}
                                     {error && <S.Error>{error}</S.Error>}
                                     <S.ResultInputButton onClick={()=>{countResultExersise()}}>Отправить</S.ResultInputButton>
